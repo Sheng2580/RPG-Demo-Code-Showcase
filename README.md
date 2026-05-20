@@ -1,6 +1,6 @@
 # RPG Demo Code Showcase
 
-这是从 Unity RPG 毕业设计项目中整理出的核心代码展示仓库，重点展示框架管理、战斗形态、角色状态机、敌人 AI、UI 面板与 AssetBundle 资源加载流程。
+这是从 Unity RPG 个人 3D 动作 RPG Demo中整理出的核心代码展示仓库，重点展示框架管理、战斗形态、角色状态机、敌人 AI、UI 面板与 AssetBundle 资源加载流程。
 
 本仓库只保留便于阅读的源码与说明文档，不包含完整 Unity 工程、场景、模型、音频、材质和生成资源。
 
