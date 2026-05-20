@@ -1,6 +1,10 @@
 # RPG Demo Code Showcase
 
+**项目亮点：基于 Unity 开发的 3D 动作 RPG Demo，封装 7 大核心管理模块，实现 FSM 状态机 + 行为树 AI + 可配置技能系统，支持 AssetBundle 资源管理与 UI 分层架构。**
+
 这是从 Unity 个人 3D 动作 RPG Demo 中整理出的核心代码展示仓库，重点展示框架管理、战斗形态、角色状态机、敌人 AI、UI 面板与 AssetBundle 资源加载流程。
+
+- 演示视频：[B 站视频演示](https://www.bilibili.com/video/BV1eBRRB7E1m/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click)
 
 本仓库只保留便于阅读的源码与说明文档，不包含完整 Unity 工程、场景、模型、音频、材质和生成资源。
 
