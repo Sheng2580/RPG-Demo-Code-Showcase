@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyPatrol : EnemyStateBase
 {
@@ -55,3 +55,5 @@ public class EnemyPatrol : EnemyStateBase
         _hasTarget = false;
     }
 }
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyHit : EnemyStateBase
 {
@@ -43,7 +43,6 @@ public class EnemyHit : EnemyStateBase
 
         enemy.isHit = false;
 
-        // 受击结束后，如果玩家还在感知范围内就继续追击，否则回到待机巡逻。
         if (enemy.TryFindTarget() && enemy.DistanceToTarget() <= enemy.detectRange)
         {
             enemy.ChangeState(EnemyStateType.Chase);
@@ -75,3 +74,5 @@ public class EnemyHit : EnemyStateBase
         _knockbackSpeed = 0f;
     }
 }
+
+

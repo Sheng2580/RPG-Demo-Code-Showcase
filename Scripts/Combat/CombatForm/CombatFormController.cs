@@ -1,94 +1,67 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CombatFormController : MonoBehaviour
 {
+    // 统一管理形态切换、武器挂载和变身能量消耗。
     [Header("References")]
-    // 玩家控制器，作为战斗形态系统的宿主。
     [SerializeField] private PlayerContorller player;
 
-    // 玩家战斗属性，负责能量、攻击力、暴击和后续 Buff。
     [SerializeField] private PlayerCombatStats stats;
 
-    // 武器或形态对象的挂载点。
     [SerializeField] private Transform weaponSocket;
 
     [Header("Forms")]
-    // 普通形态配置。
     [SerializeField] private CombatFormData normalFormData;
 
-    // 武器 A 形态配置。
     [SerializeField] private CombatFormData weaponAFormData;
 
-    // 武器 B 形态配置。
     [SerializeField] private CombatFormData weaponBFormData;
 
-    // 变身形态配置。
     [SerializeField] private CombatFormData transformFormData;
 
     [Header("Energy")]
-    // 普通形态命中一个目标时增加的能量。
     [SerializeField] private float normalHitEnergyGain = 10f;
 
-    // 变身形态每秒消耗的能量。能量耗尽时自动回到普通形态。
     [SerializeField] private float transformEnergyDrainPerSecond = 10f;
 
-    // 是否输出能量获取和消耗日志。
     [SerializeField] private bool isDebugEnergy = true;
 
-    // 当前形态逻辑对象。
     private ICombatForm currentForm;
 
-    // 当前形态配置。
     private CombatFormData currentFormData;
 
-    // 当前形态使用的旧 CombatData。
     private CombatData currentCombatData;
 
-    // 当前实例化出的武器或形态对象。
     private GameObject currentWeaponObject;
 
-    // 当前武器对象上的武器逻辑组件。
     private IWeaponCombat currentWeaponCombat;
 
-    // 当前形态剩余持续时间。
     private float formTimer;
 
-    // 当前连招段索引，由具体 CombatForm 使用。
     private int currentCombatIndex;
 
-    // 当前形态上下文。
     private CombatContext context;
 
-    // 当前宿主玩家。
     public PlayerContorller Player => player;
 
-    // 当前正在运行的形态逻辑。
     public ICombatForm CurrentForm => currentForm;
 
-    // 当前形态使用的旧 CombatData。
     public CombatData CurrentCombatData => currentCombatData;
 
-    // 当前武器逻辑组件。
     public IWeaponCombat CurrentWeaponCombat => currentWeaponCombat;
 
-    // 当前武器或形态对象的 Transform。
     public Transform CurrentWeaponTransform => currentWeaponObject != null ? currentWeaponObject.transform : null;
 
-    // 当前玩家战斗属性组件。
     public PlayerCombatStats Stats => stats;
 
-    // 当前能量值。
     public float CurrentEnergy => stats != null ? stats.CurrentEnergy : 0f;
 
-    // 最大能量值。
     public float MaxEnergy => stats != null ? stats.MaxEnergy : 0f;
 
-    // 当前是否输出能量调试日志。
     public bool IsDebugEnergy => isDebugEnergy;
 
     public float TransformEnergyDrainMultiplier { get; set; } = 1f;
 
-    // 当前连招段索引。
     public int CurrentCombatIndex
     {
         get => currentCombatIndex;
@@ -473,3 +446,5 @@ public class CombatFormController : MonoBehaviour
         }
     }
 }
+
+

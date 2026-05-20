@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -53,8 +53,8 @@ public class DialoguePanel : BasePanel
             endButton.gameObject.SetActive(false);
         }
 
-        specialTipPanel.Open("对话");
-        EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, false);
+        specialTipPanel.Open("瀵硅瘽");
+        EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? false);
     }
 
     private void OnDisable()
@@ -67,7 +67,7 @@ public class DialoguePanel : BasePanel
         {
             UIManager.Instance.ClosePanel<specialTipPanel>();
         }
-        EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, true);
+        EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? true);
     }
 
     private void Update()
@@ -91,7 +91,7 @@ public class DialoguePanel : BasePanel
 
         if (!suppressInteractionRefreshOnClose)
         {
-            EventCenter.Instance.EventTrigger(GameEvent.玩家检测Npc);
+            EventCenter.Instance.EventTrigger(GameEvent.鐜╁妫€娴婲pc);
         }
 
         suppressInteractionRefreshOnClose = false;
@@ -411,3 +411,5 @@ public class DialoguePanel : BasePanel
         }
     }
 }
+
+

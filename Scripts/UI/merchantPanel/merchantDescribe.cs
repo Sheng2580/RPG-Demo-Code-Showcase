@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -27,7 +27,7 @@ public class merchantDescribe : MonoBehaviour
 
       if (commodityDescribeText != null)
       {
-         commodityDescribeText.text = commodity.CommodityType == 1 ? "Buff" : (commodity.CommodityType == 2 ? "道具" : "未知");
+         commodityDescribeText.text = commodity.CommodityType == 1 ? "Buff" : (commodity.CommodityType == 2 ? "閬撳叿" : "鏈煡");
       }
 
       if (commodityDetailedInformationText != null)
@@ -62,7 +62,7 @@ public class merchantDescribe : MonoBehaviour
          if (onBuy != null)
          {
             merchantButton.onClick.AddListener(onBuy);
-            MusicMgr.Instance.PlaySoundForAB("selece1");
+            MusicManager.Instance.PlaySoundForAB("selece1");
          }
       }
    }
@@ -76,3 +76,5 @@ public class merchantDescribe : MonoBehaviour
       }
    }
 }
+
+

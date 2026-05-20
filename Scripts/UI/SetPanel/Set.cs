@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Set : MonoBehaviour
@@ -23,7 +23,7 @@ public class Set : MonoBehaviour
 
         _backgroundMusicSlider = transform.Find("BackgroundMusic").transform.Find("Slider").GetComponent<Slider>();
         _backgroundMusicValue = transform.Find("BackgroundMusic").transform.Find("Text").GetComponent<Text>();
-        
+
         _soundSlider = transform.Find("Sound").transform.Find("Slider").GetComponent<Slider>();
         _soundValue = transform.Find("Sound").transform.Find("Text").GetComponent<Text>();
     }
@@ -35,3 +35,5 @@ public class Set : MonoBehaviour
     }
 
 }
+
+

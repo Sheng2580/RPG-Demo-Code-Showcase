@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,14 +9,13 @@ public class InteractionItem : MonoBehaviour
     private GameObject _key;
     private Text _text;
     private Image _image;
-    
+
     private Tweener _keyTweener;
     private Tweener _imageTweener;
     public UnityAction Interaction; 
 
     private void Awake()
     {
-        // 尝试稳健地获取子组件，兼容预制层级微调导致的 null 情况
         if (transform.childCount > 1)
         {
             var child1 = transform.GetChild(1);
@@ -28,7 +27,6 @@ public class InteractionItem : MonoBehaviour
             _key = child0 != null ? child0.gameObject : null;
         }
 
-        // 优先按指定名称查找文本节点，否则回退到搜索第一个子 Text
         Transform textTf = null;
         if (transform.childCount > 1)
             textTf = transform.GetChild(1).transform.Find("InteractionText");
@@ -38,7 +36,7 @@ public class InteractionItem : MonoBehaviour
             _text = GetComponentInChildren<Text>(true);
 
         if (_image == null) _image = GetComponentInChildren<Image>(true);
-       
+
     }
 
     private void OnEnable()
@@ -78,8 +76,8 @@ public class InteractionItem : MonoBehaviour
 
         Interaction = action;
     }
-    
-    
+
+
     public void CallInteraction()
     {
         if (_imageTweener != null)
@@ -108,7 +106,8 @@ public class InteractionItem : MonoBehaviour
         else
             Debug.LogWarning("[InteractionItem] StopAction: _key is null");
     }
-    
-    
-    
+
+
 }
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyChase : EnemyStateBase
 {
@@ -37,3 +37,5 @@ public class EnemyChase : EnemyStateBase
         enemy.EndRootMotionMove();
     }
 }
+
+

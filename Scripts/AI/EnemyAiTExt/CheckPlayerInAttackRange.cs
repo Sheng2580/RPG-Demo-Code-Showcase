@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CheckPlayerInAttackRange : Behavior
 {
@@ -19,7 +19,6 @@ public class CheckPlayerInAttackRange : Behavior
     {
         if (player == null || monster == null) return EStatus.Failure;
 
-        // 旧测试节点：只负责判断距离，正式敌人逻辑请优先使用 EnemyAIBehaviors。
         float distance = Vector3.Distance(monster.position, player.position);
         return distance <= attackRange ? EStatus.Success : EStatus.Failure;
     }
@@ -46,7 +45,7 @@ public class AttackPlayer : Behavior
     {
         timer = 0f;
         PlayAnimation("Attack1");
-        Debug.Log($"开始攻击，造成{damage}点伤害");
+        Debug.Log($"寮€濮嬫敾鍑伙紝閫犳垚{damage}鐐逛激瀹?);
     }
 
     private void PlayAnimation(string animationName, int layer = 0, float fixedTransitionTime = 0.25f)
@@ -60,3 +59,5 @@ public class AttackPlayer : Behavior
         return timer < 1f ? EStatus.Running : EStatus.Success;
     }
 }
+
+

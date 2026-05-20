@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class WeaponCombatBase : WeaponBase, IWeaponCombat
@@ -81,3 +81,5 @@ public abstract class WeaponCombatBase : WeaponBase, IWeaponCombat
         enemy.TakeDamage(Mathf.Max(0f, attackMultiplier), attacker);
     }
 }
+
+

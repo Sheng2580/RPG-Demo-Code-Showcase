@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,6 @@ public class PropItem : MonoBehaviour
 
    private Text _propName;
 
-   //该道具的数量
    private Text _propSum;
 
    private void Awake()
@@ -86,3 +85,5 @@ public class PropItem : MonoBehaviour
 
 
 }
+
+

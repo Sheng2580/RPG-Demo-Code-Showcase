@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerSlideAttack : PlayerState
 {
@@ -17,3 +17,5 @@ public class PlayerSlideAttack : PlayerState
         Player.combatFormController?.CurrentForm?.OnSlideAttackExit();
     }
 }
+
+

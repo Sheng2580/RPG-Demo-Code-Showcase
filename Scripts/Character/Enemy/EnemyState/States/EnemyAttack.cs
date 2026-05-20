@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyAttack : EnemyStateBase
 {
@@ -71,3 +71,5 @@ public class EnemyAttack : EnemyStateBase
         _currentAttackAnimationName = null;
     }
 }
+
+

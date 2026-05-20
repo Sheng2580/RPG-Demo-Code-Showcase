@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -170,7 +170,7 @@ public class EnemyCreateManager : MonoBehaviour
         GameObject enemyObj = null;
         bool loaded = false;
 
-        PoolMgr.Instance.GetObjForAB(EnemyAbName, enemyName, obj =>
+        PoolManager.Instance.GetObjForAB(EnemyAbName, enemyName, obj =>
         {
             enemyObj = obj;
             loaded = true;
@@ -194,7 +194,7 @@ public class EnemyCreateManager : MonoBehaviour
         if (enemy == null)
         {
             Debug.LogError($"[EnemyCreateManager] {enemyName} missing EnemyBase.");
-            PoolMgr.Instance.pushObj(enemyName, enemyObj);
+            PoolManager.Instance.pushObj(enemyName, enemyObj);
             yield break;
         }
 
@@ -484,7 +484,7 @@ public class EnemyCreateManager : MonoBehaviour
             yield break;
         }
 
-        PoolMgr.Instance.pushObj(enemy.gameObject.name, enemy.gameObject);
+        PoolManager.Instance.pushObj(enemy.gameObject.name, enemy.gameObject);
     }
 
     private void CompleteAllWaves()
@@ -519,3 +519,5 @@ public class EnemyCreateManager : MonoBehaviour
         ClearAliveEnemyListeners();
     }
 }
+
+

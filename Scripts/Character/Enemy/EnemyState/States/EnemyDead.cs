@@ -1,4 +1,4 @@
-public class EnemyDead : EnemyStateBase
+﻿public class EnemyDead : EnemyStateBase
 {
     public override void Enter()
     {
@@ -6,7 +6,7 @@ public class EnemyDead : EnemyStateBase
         enemy.EndWeaponAttackDetection();
         PlayAnimation(enemy.deadAnimationName);
     }
-    
+
     public override void Update()
     {
     }
@@ -15,3 +15,5 @@ public class EnemyDead : EnemyStateBase
     {
     }
 }
+
+

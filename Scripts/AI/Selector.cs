@@ -1,8 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//选择器
 public class Selector : Sequence
 {
     protected override EStatus OnUpdate()
@@ -18,3 +17,5 @@ public class Selector : Sequence
         }
     }
 }
+
+

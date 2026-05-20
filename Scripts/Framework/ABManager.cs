@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +9,7 @@ using Object = UnityEngine.Object;
 public class ABManager : UnitySingleTonMono<ABManager>
 {
     private readonly Dictionary<string, AssetBundle> assetBundlesDictionary = new Dictionary<string, AssetBundle>();
+    // 同一个 AB 正在加载时合并回调，避免并发请求重复读包。
     private readonly Dictionary<string, List<UnityAction>> loadingCallbacks = new Dictionary<string, List<UnityAction>>();
 
     private AssetBundle mainAb;
@@ -53,6 +54,7 @@ public class ABManager : UnitySingleTonMono<ABManager>
             return;
         }
 
+        // 先按 Manifest 补齐依赖，再加载目标包。
         string[] dependencies = manifest.GetAllDependencies(abName);
         for (int i = 0; i < dependencies.Length; i++)
         {
@@ -396,3 +398,5 @@ public class ABManager : UnitySingleTonMono<ABManager>
         Debug.Log("[ABManager] All AB unloaded");
     }
 }
+
+

@@ -1,4 +1,4 @@
-public class PlayerCombatAttack : PlayerState
+﻿public class PlayerCombatAttack : PlayerState
 {
     public override void Enter()
     {
@@ -15,3 +15,5 @@ public class PlayerCombatAttack : PlayerState
         Player.combatFormController?.CurrentForm?.OnAttackExit();
     }
 }
+
+

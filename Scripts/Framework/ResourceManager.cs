@@ -1,21 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// 资源加载管理器  
-/// </summary>
-public class ResMgr : SingleTon<ResMgr>
+public class ResourceManager : SingleTon<ResourceManager>
 {
-    /// <summary>
-    /// 资源加载方法
-    /// </summary>
-    /// <param name="name"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
     public T load<T>(string name,Transform father=null)where T:Object
     {
         T res = Resources.Load<T>(name);
-        if (res is GameObject) //GameObject 
+        if (res is GameObject)
         {
             T obj = GameObject.Instantiate(res);
             if (father != null)
@@ -28,9 +19,11 @@ public class ResMgr : SingleTon<ResMgr>
 
             return obj;
         }
-        else//AudioClip TextAsset  
+        else
         {
             return res; 
         }
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SlashProjectile : MonoBehaviour
@@ -39,7 +39,7 @@ public class SlashProjectile : MonoBehaviour
             return;
         }
 
-        Debug.Log($"触发伤害+{target.name}");
+        Debug.Log($"瑙﹀彂浼ゅ+{target.name}");
 
         DamageResult damageResult = CalculateOwnerDamage(damage);
         enemy?.TakeDamage(damageResult.damage, owner != null ? owner.transform : transform, damageResult.isCrit);
@@ -71,3 +71,5 @@ public class SlashProjectile : MonoBehaviour
         };
     }
 }
+
+

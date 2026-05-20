@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SetPanel : BasePanel
 {
@@ -26,7 +26,7 @@ public class SetPanel : BasePanel
    public override void Show()
    {
       base.Show();
-      specialTipPanel.Open("设置");
+      specialTipPanel.Open("璁剧疆");
    }
 
    public override void Hide()
@@ -85,3 +85,5 @@ public class SetPanel : BasePanel
       }
    }
 }
+
+

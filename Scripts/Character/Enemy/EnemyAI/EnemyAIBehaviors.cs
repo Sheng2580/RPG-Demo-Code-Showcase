@@ -1,4 +1,4 @@
-public class EnemyCheckDetectRange : Behavior
+﻿public class EnemyCheckDetectRange : Behavior
 {
     private EnemyBase enemy;
 
@@ -29,7 +29,6 @@ public class EnemyCheckAttackRange : Behavior
     {
         if (enemy == null || enemy.target == null) return EStatus.Failure;
 
-        // Once attack starts, let EnemyAttack finish and decide whether to chase again.
         if (enemy.currentStateType == EnemyStateType.Attack)
         {
             return EStatus.Success;
@@ -190,3 +189,5 @@ public class SetDeadState : Behavior
         return EStatus.Success;
     }
 }
+
+

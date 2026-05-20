@@ -1,7 +1,4 @@
-/// <summary>
-/// 普通近战敌人：巡逻、发现玩家后追击、进入攻击距离后攻击。
-/// </summary>
-public class OrdinaryEnemy : EnemyBase
+﻿public class OrdinaryEnemy : EnemyBase
 {
     private bool hasCurrentState;
 
@@ -9,6 +6,7 @@ public class OrdinaryEnemy : EnemyBase
     {
         var builder = new BehaviorTreeBuilder();
 
+        // 行为树只负责决策顺序，具体动作仍交给敌人状态机执行。
         behaviorTree = builder
             .Selector()
                 .Sequence()
@@ -76,3 +74,5 @@ public class OrdinaryEnemy : EnemyBase
         }
     }
 }
+
+

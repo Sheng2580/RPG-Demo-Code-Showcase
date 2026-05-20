@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -13,12 +13,11 @@ public class specialTipPanel : BasePanel
       base.Awake();
       _tipText = transform.GetChild(1).GetComponent<Text>();
       _eyeImage = transform.GetChild(0).transform.GetChild(0).gameObject;
-     
+
    }
 
    private void OnEnable()
    {
-      // 预先把眼睛缩放到初始小状态，等移动到位后播放眼睛动画
       _eyeImage.transform.localScale = new Vector3(_eyeImage.transform.localScale.x, 0.1f, _eyeImage.transform.localScale.z);
       _moveTweener = transform.DOLocalMove(new Vector3(-752, 447, 0), 0.5f)
          .SetAutoKill(false)
@@ -38,7 +37,7 @@ public class specialTipPanel : BasePanel
       _moveTweener?.Kill();
       _eyeImage.transform.localScale = new Vector3(_eyeImage.transform.localScale.x, 1f, _eyeImage.transform.localScale.z);
    }
-   
+
    private void OnMoveBackFinished()
    {
       base.Hide();
@@ -47,7 +46,6 @@ public class specialTipPanel : BasePanel
    private void StartEyeTween()
    {
       _eyeTweener?.Kill();
-      // 确保从小到大播放
       _eyeImage.transform.localScale = new Vector3(_eyeImage.transform.localScale.x, 0.1f, _eyeImage.transform.localScale.z);
       _eyeTweener = _eyeImage.transform.DOScaleY(1f, 0.5f)
          .SetLoops(3, LoopType.Yoyo)
@@ -62,10 +60,6 @@ public class specialTipPanel : BasePanel
       _tipText.text = tip;
    }
 
-   /// <summary>
-   /// 便捷方法：打开 specialTipPanel 并设置提示文本
-   /// 调用示例： specialTipPanel.Open("商店");
-   /// </summary>
    public static specialTipPanel Open(string tip, UILayer layer = UILayer.Dynamic)
    {
       if (UIManager.Instance == null) return null;
@@ -84,3 +78,5 @@ public class specialTipPanel : BasePanel
       return panel;
    }
 }
+
+

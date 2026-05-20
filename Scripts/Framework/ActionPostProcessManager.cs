@@ -1,14 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using SCPE;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Controls short combat/action post process pulses on the current scene volume.
-/// Scene-specific default values are captured as the baseline and restored after each effect.
-/// </summary>
+short combat/action post process pulses on the current scene volume.
 public class ActionPostProcessManager : UnitySingleTonMono<ActionPostProcessManager>
 {
     [Header("Volume")]
@@ -911,3 +908,5 @@ public class ActionPostProcessManager : UnitySingleTonMono<ActionPostProcessMana
         }
     }
 }
+
+

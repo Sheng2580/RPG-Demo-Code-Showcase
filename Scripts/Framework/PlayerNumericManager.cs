@@ -298,7 +298,7 @@ public class PlayerNumericManager : SingleTon<PlayerNumericManager>
 
     private List<T> LoadTable<T>(string tableName) where T : new()
     {
-        List<T> list = JsonMgr.Instance.LoadData<List<T>>(tableName);
+        List<T> list = JsonManager.Instance.LoadData<List<T>>(tableName);
         return list ?? new List<T>();
     }
 
@@ -477,3 +477,5 @@ public class PlayerNumericManager : SingleTon<PlayerNumericManager>
         buffConfigs.Add(new BuffConfig { id = 4, name = "Energy Gain", iconName = "EnergyGain", desc = "Energy Gain +20%", statType = PlayerStatType.EnergyGainEfficiency, addType = PlayerStatAddType.Flat, value = 0.2f, weight = 1f, price = 100, maxStack = 1 });
     }
 }
+
+

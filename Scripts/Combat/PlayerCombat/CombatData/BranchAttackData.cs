@@ -1,21 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Configs/BranchAttackData")]
 public class BranchAttackData : ScriptableObject
 {
-    /* 后摇时间，超过后允许移动打断攻击。 */ public float cdTime;
-    /* 攻击名称，只用于在配置面板中识别。 */ public string attackName;
-    /* 连招窗口开启时间，超过后可以接回下一段普通攻击。 */ public float nextAttackTime;
-    /* 攻击结束时间，动画 normalizedTime 超过后没有输入就回 Idle。 */ public float endTime = 0.95f;
-    /* 该分支攻击段的命中判定时间点。 */ public TriggerHit[] triggerHits;
-    /* 对应 Animator 里的动画状态名。 */ public string attackAnimationName;
-    /* 分支攻击位移距离，有锁定目标时朝目标突进，否则朝角色前方位移。 */ public float displacement;
-    
-    // 分支攻击位移持续时间
+    /* 鍚庢憞鏃堕棿锛岃秴杩囧悗鍏佽绉诲姩鎵撴柇鏀诲嚮銆?*/ public float cdTime;
+    /* 鏀诲嚮鍚嶇О锛屽彧鐢ㄤ簬鍦ㄩ厤缃潰鏉夸腑璇嗗埆銆?*/ public string attackName;
+    /* 杩炴嫑绐楀彛寮€鍚椂闂达紝瓒呰繃鍚庡彲浠ユ帴鍥炰笅涓€娈垫櫘閫氭敾鍑汇€?*/ public float nextAttackTime;
+    /* 鏀诲嚮缁撴潫鏃堕棿锛屽姩鐢?normalizedTime 瓒呰繃鍚庢病鏈夎緭鍏ュ氨鍥?Idle銆?*/ public float endTime = 0.95f;
+    /* 璇ュ垎鏀敾鍑绘鐨勫懡涓垽瀹氭椂闂寸偣銆?*/ public TriggerHit[] triggerHits;
+    /* 瀵瑰簲 Animator 閲岀殑鍔ㄧ敾鐘舵€佸悕銆?*/ public string attackAnimationName;
+    /* 鍒嗘敮鏀诲嚮浣嶇Щ璺濈锛屾湁閿佸畾鐩爣鏃舵湞鐩爣绐佽繘锛屽惁鍒欐湞瑙掕壊鍓嶆柟浣嶇Щ銆?*/ public float displacement;
+
      public float displacementTime;
-    //击退距离
     public float repelDistance;
 
-    // Enemy hit-stun caused by this branch attack. Longer than normal hits so the enemy cannot trade attacks.
     public float enemyHitStunDuration = 0.8f;
 }
+
+

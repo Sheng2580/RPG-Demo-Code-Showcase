@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public partial class BehaviorTreeBuilder
 {
@@ -26,11 +26,10 @@ public partial class BehaviorTreeBuilder
     }
     public BehaviorTreeBuilder Add(Behavior behavior)
     {
-        // 内部调用私有的 AddBehavior
         AddBehavior(behavior);
-        return this; // 返回自身以支持链式调用
+        return this;
     }
-    
+
     public void TreeTick()
     {
         bhTree.Tick();
@@ -45,7 +44,6 @@ public partial class BehaviorTreeBuilder
         nodeStack.Clear();
         return bhTree;
     }
-    //---------包装各节点---------
     public BehaviorTreeBuilder Sequence()
     {
         var tp = new Sequence();
@@ -94,6 +92,7 @@ public partial class BehaviorTreeBuilder
         AddBehavior(tp);
         return this;
     }
-    
-    
+
+
 }
+

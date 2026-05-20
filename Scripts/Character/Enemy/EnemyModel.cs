@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyModel : CharacterModelBase
 {
@@ -7,3 +7,5 @@ public class EnemyModel : CharacterModelBase
         base.Awake();
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -24,7 +24,6 @@ public class LoadCanvas : UnitySingleTonMono<LoadCanvas>
         EnsureCanvasGroup();
     }
 
-   
 
     public void Hied(UnityAction callBack = null)
     {
@@ -129,3 +128,5 @@ public class LoadCanvas : UnitySingleTonMono<LoadCanvas>
         }
     }
 }
+
+

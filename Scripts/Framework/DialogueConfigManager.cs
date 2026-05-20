@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -87,7 +87,7 @@ public class DialogueConfigManager : SingleTon<DialogueConfigManager>
 
     private void LoadDialogues()
     {
-        List<DialogueData> dialogueList = JsonMgr.Instance.LoadData<List<DialogueData>>(DialogueTableName);
+        List<DialogueData> dialogueList = JsonManager.Instance.LoadData<List<DialogueData>>(DialogueTableName);
         if (dialogueList == null)
         {
             Debug.LogWarning($"[DialogueConfigManager] {DialogueTableName}.json load result is null");
@@ -121,7 +121,7 @@ public class DialogueConfigManager : SingleTon<DialogueConfigManager>
     private void LoadTabControls()
     {
         List<DialogueTabControlData> tabControlList =
-            JsonMgr.Instance.LoadData<List<DialogueTabControlData>>(DialogueTabControlTableName);
+            JsonManager.Instance.LoadData<List<DialogueTabControlData>>(DialogueTabControlTableName);
 
         if (tabControlList == null)
         {
@@ -146,3 +146,5 @@ public class DialogueConfigManager : SingleTon<DialogueConfigManager>
         }
     }
 }
+
+

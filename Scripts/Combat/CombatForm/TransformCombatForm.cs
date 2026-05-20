@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TransformCombatForm : CombatFormBase
 {
@@ -14,61 +14,43 @@ public class TransformCombatForm : CombatFormBase
     private static readonly Vector3 TransformLaserLocalPosition = new Vector3(0f, 1.25f, 1.25f);
     private static readonly Vector3 TransformLaserLocalEuler = Vector3.zero;
 
-    // 变身形态默认飞行移动速度。
     private const float FlyMoveSpeed = 7f;
 
-    // 变身形态 Idle 朝向摄像机前方的平滑时间。
     private const float CameraFaceSmoothTime = 0.08f;
 
-    // 飞行方向切换平滑速度，数值越大转向越快。
     private const float FlyMoveDirectionLerpSpeed = 8f;
 
-    // 飞行动画方向参数平滑时间。
     private const float FlyAngleSmoothTime = 0.1f;
 
-    // 飞行动画速度参数平滑时间。
     private const float FlySpeedDampTime = 0.08f;
 
-    // 每段变身攻击的后坐力后退距离。
     private const float TransformAttackRecoilDistance = 0.75f;
     private const float TransformDodgeDistance = 3f;
     private const float TransformDodgeDuration = 0.16f;
     private const float TransformDodgeCooldown = 0.28f;
 
-    // 找不到攻击触发时间时，变身攻击默认前移完成时间。
     private const float DefaultTransformAttackLungeDuration = 0.12f;
 
-    // 变身形态朝向摄像机前方的平滑速度缓存。
     private float cameraFaceVelocity;
 
-    // 当前平滑后的飞行位移方向。
     private Vector3 smoothedMoveDirection;
 
-    // 当前平滑后的飞行动画角度。
     private float currentFlyAngle;
 
-    // 飞行动画角度平滑速度缓存。
     private float flyAngleVelocity;
 
-    // 当前变身攻击段数据。
     private NormalAttackData currentTransformAttackData;
 
-    // 当前攻击是否已经生成最后一段摩托冲撞。
     private bool hasSpawnedMotorcycleRush;
 
-    // 当前攻击是否等待生成最后一段摩托冲撞。
     private bool isMotorcycleRushPending;
 
-    // 当前变身攻击前移计时器版本号。
     private int transformAttackLungeVersion;
 
-    // 当前变身攻击前移剩余时间。
     private float transformAttackLungeRemainTime;
 
-    // 当前变身攻击前移每秒速度。
     private float transformAttackLungeSpeed;
 
-    // 当前变身攻击前移方向。
     private Vector3 transformAttackLungeDirection;
     private int lastTransformDodgeFrame = -1;
     private int transformDodgeVersion;
@@ -82,14 +64,12 @@ public class TransformCombatForm : CombatFormBase
     private int transformLaserSpawnVersion;
     private float transformLaserCooldownEndTime;
 
-    // 当前形态类型。
     public override CombatFormType FormType => CombatFormType.Transform;
 
     public override void EnterForm(CombatContext context, CombatFormData formData)
     {
         base.EnterForm(context, formData);
-        Debug.Log("进入变身形态");
-        //player.sitFreeLookCam?.PlayTransfigurationCameraEffect();
+        Debug.Log("杩涘叆鍙樿韩褰㈡€?);
 
         currentTransformAttackData = null;
         hasSpawnedMotorcycleRush = false;
@@ -118,7 +98,7 @@ public class TransformCombatForm : CombatFormBase
         base.ExitForm();
 
         EventCenter.Instance.EventTrigger(
-            GameEvent.外描边发光,
+            GameEvent.澶栨弿杈瑰彂鍏?
             new OutlineGlowEventData(false, Color.blue)
         );
 
@@ -348,14 +328,12 @@ public class TransformCombatForm : CombatFormBase
         isMotorcycleRushPending = false;
         Debug.Log("[TransformCombatForm] Spawn motorcycle rush.");
         ActionPostProcessManager.Instance?.PlayRushEffect();
-        // 每段攻击都会生成摩托，频繁改 FreeLook FOV/YAxis 容易造成镜头抖动。
-        // player.sitFreeLookCam?.PlayRushCameraEffect();
         Motorcycle.SpawnRush(player, MotorcyclePoolName);
     }
 
     private void StartTransformLaserSkill()
     {
-        if (player == null || PoolMgr.Instance == null)
+        if (player == null || PoolManager.Instance == null)
         {
             return;
         }
@@ -368,13 +346,13 @@ public class TransformCombatForm : CombatFormBase
         }
 
         int spawnVersion = transformLaserSpawnVersion;
-        PoolMgr.Instance.GetObjForAB(TransformLaserEffectABName, TransformLaserEffectName, obj =>
+        PoolManager.Instance.GetObjForAB(TransformLaserEffectABName, TransformLaserEffectName, obj =>
         {
             if (!isTransformLaserSkillActive || spawnVersion != transformLaserSpawnVersion || player == null || obj == null)
             {
                 if (obj != null)
                 {
-                    PoolMgr.Instance.pushObj(TransformLaserEffectName, obj);
+                    PoolManager.Instance.pushObj(TransformLaserEffectName, obj);
                 }
 
                 return;
@@ -424,9 +402,9 @@ public class TransformCombatForm : CombatFormBase
         {
             transformLaserSkill.StopSkill();
         }
-        else if (transformLaserObject != null && PoolMgr.Instance != null)
+        else if (transformLaserObject != null && PoolManager.Instance != null)
         {
-            PoolMgr.Instance.pushObj(TransformLaserEffectName, transformLaserObject);
+            PoolManager.Instance.pushObj(TransformLaserEffectName, transformLaserObject);
         }
 
         transformLaserSkill = null;
@@ -526,7 +504,7 @@ public class TransformCombatForm : CombatFormBase
             return false;
         }
 
-        EventCenter.Instance.EventTrigger(GameEvent.生成残影, new Color(0.145f, 0.612f, 0.91f, 1f));
+        EventCenter.Instance.EventTrigger(GameEvent.鐢熸垚娈嬪奖, new Color(0.145f, 0.612f, 0.91f, 1f));
         transformDodgeVersion = attackVersion;
         transformDodgeDirection = dodgeDirection.normalized;
         transformDodgeRemainTime = TransformDodgeDuration;
@@ -651,7 +629,7 @@ public class TransformCombatForm : CombatFormBase
 
     private void TriggerTransformAttackGhost()
     {
-        EventCenter.Instance.EventTrigger(GameEvent.生成残影, new Color(0.145f, 0.612f, 0.91f, 1f));
+        EventCenter.Instance.EventTrigger(GameEvent.鐢熸垚娈嬪奖, new Color(0.145f, 0.612f, 0.91f, 1f));
     }
 
     private void StartTransformAttackLunge(NormalAttackData attackData, int version)
@@ -748,3 +726,5 @@ public class TransformCombatForm : CombatFormBase
         player.model.animator.SetFloat("Angle", 0f);
     }
 }
+
+

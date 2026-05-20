@@ -1,11 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TabControlItem : MonoBehaviour
 {
-    // 图标只分“对话 / 交互”两种，缓存后避免重复从 AB 加载。
     private static readonly Dictionary<string, Sprite> IconCache = new Dictionary<string, Sprite>();
 
     private Image _tabImage;
@@ -32,8 +31,8 @@ public class TabControlItem : MonoBehaviour
         if (_tabImage != null)
         {
             string iconName = data != null && data.TabType == DialogueTabControlType.Interaction
-                ? "交互"
-                : "对话";
+                ? "浜や簰"
+                : "瀵硅瘽";
             _tabImage.sprite = LoadIcon(iconName);
         }
 
@@ -42,8 +41,6 @@ public class TabControlItem : MonoBehaviour
             _button.onClick.RemoveAllListeners();
             if (data != null && clickAction != null)
             {
-                // 把整条选项数据回传给面板，面板再决定跳句还是执行交互。
-                _button.onClick.AddListener(() => clickAction.Invoke(_currentData));
             }
         }
     }
@@ -68,17 +65,17 @@ public class TabControlItem : MonoBehaviour
             return cachedSprite;
         }
 
-        // 选项 prefab 在 uiitem 包，图标资源在 icon 包。
-        Sprite sprite = ABManager.Instance != null ? ABManager.Instance.LoadRes<Sprite>("icon", iconName) : null;
         if (sprite != null)
         {
             IconCache[iconName] = sprite;
         }
         else
         {
-            Debug.LogWarning($"[TabControlItem] 无法加载图标: {iconName}");
+            Debug.LogWarning($"[TabControlItem] 鏃犳硶鍔犺浇鍥炬爣: {iconName}");
         }
 
         return sprite;
     }
 }
+
+

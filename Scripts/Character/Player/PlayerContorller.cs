@@ -19,31 +19,21 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
     public FreeLookLeftShoulderFinal sitFreeLookCam;
 
     [Header("Combat Form")]
-    // 战斗形态控制器，负责切换普通、武器和变身形态。
     public CombatFormController combatFormController;
-    // 当前攻击是否已经允许接下一段连招。
     [HideInInspector]
     public bool isCanNextCombat;
-    // 当前攻击是否已经允许移动打断后摇。
     [HideInInspector]
     public bool isCanMoveInAttack;
     private bool isCombatInputEnabled = true;
 
-    // 敌人检测 LayerMask，用于攻击判定和锁敌搜索。
     public LayerMask enemyLayerMask;
 
     [Header("受击 / 闪避")]
-    // 敌人伤害触发后开启的短窗口，在窗口内闪避会触发极限闪避。
     public float perfectDodgeWindow = 0.25f;
-    // 极限闪避成功后，在该时间内按普通攻击可进入 SlideAttack。
     public float perfectDodgeAttackWindow = 0.6f;
-    // 闪避无敌持续时间，时间内不会结算普通受击。
     public float dodgeInvincibleDuration = 0.35f;
-    // 闪避动画播放到该 normalizedTime 后，允许再次闪避取消后摇。
     public float slideCancelNormalizedTime = 0.55f;
-    // 受击动画播放到该 normalizedTime 后，允许闪避取消后摇。
     public float hitCancelNormalizedTime = 0.55f;
-    // 闪避动画播放到该 normalizedTime 后，自动回到待机或移动。
     public float slideEndNormalizedTime = 0.9f;
     [HideInInspector] public bool isInvincible;
     [HideInInspector] public bool isHitStunImmune;
@@ -63,31 +53,21 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
     private bool _hasCachedAnimatorUpdateMode;
 
     [Header("锁定参数")]
-    // 锁定敌人的搜索半径。
     public float lockEnemyRadius = 18f;
-    // 锁定目标超过该距离后自动取消锁定。
     public float lockBreakDistance = 24f;
-    // 锁定点高度，用于把相机目标抬到敌人胸口附近。
     public float lockCameraTargetHeight = 1.2f;
-    // 摄像机画面内没有目标时，允许锁定玩家前方该角度内的敌人。
     public float lockFallbackForwardAngle = 70f;
-    // 攻击时朝锁定敌人转向的平滑时间。
     public float lockAttackTurnSmoothTime = 0.08f;
-    // 是否输出锁敌调试日志。
     public bool isDebugLockEnemy = true;
-    // 当前是否正在锁定敌人。
     [HideInInspector]
     public bool isLockingEnemy;
-    // 当前锁定的敌人。
     [HideInInspector]
     public Transform lockEnemyTarget;
     private float _lockAttackTurnVelocity;
-    
-    //TimeLine控制器加载对应的动画
-    //管理TimeLine
+
      public PlayerTimeLineController playerTimeLineController;
-    
-   
+
+
     private void Awake()
     {
         if (sitFreeLookCam == null)
@@ -115,7 +95,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
     private void OnEnable()
     {
-        // GameEvent 第 4 项是“设置玩家状态”，这里用枚举序号避免旧文件编码影响编译。
         EventCenter.Instance.AddEventListener<PlayerStateType>((GameEvent)4, ChangeState);
         EventCenter.Instance.AddEventListener<bool>(GameEvent.角色战斗控制, SetCombatInputEnabled);
     }
@@ -123,7 +102,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
     private void OnDisable()
     {
         EventCenter.Instance.RemoveEventListener<bool>(GameEvent.角色战斗控制, SetCombatInputEnabled);
-        // GameEvent 第 4 项是“设置玩家状态”，这里用枚举序号避免旧文件编码影响编译。
         EventCenter.Instance.RemoveEventListener<PlayerStateType>((GameEvent)4, ChangeState);
     }
 
@@ -134,7 +112,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             _stateMachine.Stop(false);
         }
     }
-    
+
     protected override void Start()
     {
         base.Start();
@@ -188,7 +166,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             case PlayerStateType.Skill:
                 _stateMachine.ChangeState<PlayerSkill>();
                 break;
-            
+
             case PlayerStateType.Fall:
                 _stateMachine.ChangeState<PlayerFall>();
                 break;
@@ -206,7 +184,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
                 break;
         }
     }
-    
+
     protected override void Update()
     {
         base.Update();
@@ -216,13 +194,12 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         PlayerCombatInput();
         PlayerFall();
         TickHitAndDodgeWindows();
-        
-        //同步
+
         if (model.animator.HasParameter("IsGround"))
         {
             model.animator.SetBool("IsGround", characterIsGrounded);      
         }
-        
+
     }
     #region 角色攻击
 
@@ -310,7 +287,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             return;
         }
 
-        // 攻击状态中的接普通攻击、分支攻击逻辑由当前 CombatForm 的 OnAttackUpdate 处理，避免同一帧重复触发两次
         if (currentState == PlayerStateType.CombatAttack)
         {
             if (GameInputManger.Instance.Slide)
@@ -320,7 +296,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
             return;
         }
-        
+
         if (GameInputManger.Instance.LAttack)
         {
             combatFormController.TryLightAttack();
@@ -351,16 +327,12 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
     {
         isCombatInputEnabled = isEnabled;
     }
-    
-    
-    // 往下触发普通连招段索引
+
+
     public void CombatAttack()
     {
-        // 连段推进已经由当前 CombatForm 在 TryLightAttack/TryPlayWeaponComboAttack 中处理。
-        // 旧动画事件如果继续推进，会导致变身连段跳段，最后一段无法稳定触发。
     }
 
-    // 检测敌人并触发命中反馈。
     public void DetectionEnemy(TriggerHit triggerHit = null)
     {
         CombatData currentCombatData = GetCurrentCombatData();
@@ -490,7 +462,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         return true;
     }
 
-    //极限闪避判定
     public bool TryTriggerPerfectDodgeInSlide()
     {
         if (currentState != PlayerStateType.Slide ||
@@ -620,9 +591,8 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
         hasPerfectDodgeAttackWindow = true;
         _perfectDodgeAttackEndTime = Time.unscaledTime + Mathf.Max(0f, perfectDodgeAttackWindow);
-        MusicMgr.Instance.PlaySoundForAB(PerfectDodgeSoundName, transform.position);
+        MusicManager.Instance.PlaySoundForAB(PerfectDodgeSoundName, transform.position);
         ActionPostProcessManager.Instance?.PlayPerfectDodgeEffect(this);
-        // 只有玩家真正进入闪避状态并命中极限闪避窗口，才生成闪避残影。
         EventCenter.Instance.EventTrigger((GameEvent)9);
     }
 
@@ -819,8 +789,8 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             ChangeState(PlayerStateType.Fall);
         }
     }
-    
-    
+
+
     private void PlayAttackFeedback(TriggerHit triggerHit)
     {
         if (triggerHit == null)
@@ -830,7 +800,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
         if (!string.IsNullOrEmpty(triggerHit.attackSoundName))
         {
-            MusicMgr.Instance.PlaySoundForAB(triggerHit.attackSoundName, transform.position);
+            MusicManager.Instance.PlaySoundForAB(triggerHit.attackSoundName, transform.position);
         }
 
         SpawnCombatEffect(triggerHit.attackEffect, transform);
@@ -845,7 +815,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
         if (!string.IsNullOrEmpty(triggerHit.hitSoundName))
         {
-            MusicMgr.Instance.PlaySoundForAB(triggerHit.hitSoundName, target.position);
+            MusicManager.Instance.PlaySoundForAB(triggerHit.hitSoundName, target.position);
         }
 
         SpawnCombatEffect(triggerHit.effects, target);
@@ -858,7 +828,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             return;
         }
 
-        EffectMgr.Instance.PlayEffectForAB(effectData, origin);
+        EffectManager.Instance.PlayEffectForAB(effectData, origin);
     }
 
     private Collider[] GetAttackDetectionHits(Transform detectionTransform)
@@ -939,7 +909,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         DrawAttackDetectionGizmos();
     }
 
-    //缁樺埗
     private void DrawAttackDetectionGizmos()
     {
         CombatData gizmoCombatData = GetCurrentCombatData();
@@ -1000,16 +969,10 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         Gizmos.DrawLine(transform.position, center);
     }
 
-    
 
     #endregion
 
 
- 
-    
-    
-    
-    
     private void PlayerMove()
     {
         if (currentState == PlayerStateType.Transfiguration ||
@@ -1025,7 +988,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         {
             return;
         }
-        
+
         if (currentState == PlayerStateType.CombatAttack && !isCanMoveInAttack)
         {
             return;
@@ -1041,7 +1004,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
     public void InitializePlayerHud()
     {
-        if (SceneMgr.Instance.GetCurrSceneName() == "hall")
+        if (GameSceneManager.Instance.GetCurrSceneName() == "hall")
         {
             return;
         }
@@ -1054,14 +1017,14 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         {
             panel?.Bind(this, combatFormController != null ? combatFormController.Stats : GetComponent<PlayerCombatStats>());
         });
-        
+
     }
 
     private PlayerModel PlayerModel => model as PlayerModel;
 
     private void PlayerLockCamera()
     {
-        
+
         if (GameInputManger.Instance.LockCamera)
         {
 
@@ -1079,7 +1042,7 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         {
             return;
         }
-        
+
         if (IsLockTargetInvalid() ||
             Vector3.Distance(transform.position, lockEnemyTarget.position) > lockBreakDistance)
         {
@@ -1092,7 +1055,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
 
     private void TryLockEnemy()
     {
-        // 从当前摄像机画面中挑选最适合锁定的敌人。
         Transform target = FindBestLockEnemy();
         if (target == null)
         {
@@ -1155,7 +1117,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             Vector3 playerToTarget = target.position - transform.position;
             playerToTarget.y = 0f;
 
-            //濡傛灉鐩爣涓嶅湪鎽勫儚鏈虹敾闈㈠唴锛岄€€涓€姝ュ皾璇曠帺瀹舵鍓嶆柟閿佸畾
             if (playerToTarget.sqrMagnitude > 0.0001f)
             {
                 float forwardAngle = Vector3.Angle(transform.forward, playerToTarget.normalized);
@@ -1172,7 +1133,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
                 }
             }
 
-            //鍙攣瀹氭憚鍍忔満鐢婚潰鍐呯殑鏁屼汉
             if (viewportPos.z <= 0f ||
                 viewportPos.x < 0f || viewportPos.x > 1f ||
                 viewportPos.y < 0f || viewportPos.y > 1f)
@@ -1191,7 +1151,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             );
             float playerDistance = Vector3.Distance(transform.position, target.position) / lockEnemyRadius;
 
-            //浼樺厛閿佸畾鐢婚潰涓績闄勮繎鐨勬晫浜猴紝璺濈浣滀负娆¤鏉冮噸
             float score = screenCenterDistance * 0.75f + playerDistance * 0.25f;
             if (score < bestScore)
             {
@@ -1200,7 +1159,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             }
         }
 
-        //浼樺厛閿佸畾鎽勫儚鏈虹敾闈㈠唴鐩爣锛涙病鏈夋椂閿佸畾鐜╁鍓嶆柟鐩爣
         return bestTarget != null ? bestTarget : fallbackTarget;
     }
 
@@ -1236,7 +1194,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         }
 
         UpdateLockCameraTarget();
-        //閿佸畾闀滃ご鐨凾argetGroup鍜孏roupComposer缁嗚妭鏀惧湪FreeLookLeftShoulderFinal閲岀粺涓€澶勭悊
         freeLookCamera.EnterLockCamera(transform, lockEnemyTarget);
         UIManager.Instance.OpenPanelAsync<lockPanel>(UILayer.Top, panel =>
         {
@@ -1261,7 +1218,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         FreeLookLeftShoulderFinal freeLookCamera = GetFreeLookCamera();
         if (freeLookCamera != null && freeLookCamera.freeLookCam != null)
         {
-            //鍙栨秷閿佸畾鏃剁敱FreeLookLeftShoulderFinal骞虫粦鎭㈠闀滃ご杈撳叆鍜孡ookAt
             freeLookCamera.ExitLockCamera();
         }
 
@@ -1284,7 +1240,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
         FreeLookLeftShoulderFinal freeLookCamera = GetFreeLookCamera();
         if (freeLookCamera != null)
         {
-            //鐩爣缁勬瘡甯ц窡闅忕帺瀹跺拰鏁屼汉锛屾憚鍍忔満浼氭牴鎹暣涓粍瀹炴椂閲嶆柊鏋勫浘
             freeLookCamera.RefreshLockCameraTargets(transform, lockEnemyTarget);
         }
     }
@@ -1303,7 +1258,6 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
             return false;
         }
 
-        // 攻击时默认每帧平滑朝向锁定敌人。
         float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         float smoothAngle = Mathf.SmoothDampAngle(
             transform.eulerAngles.y,
@@ -1354,7 +1308,8 @@ public class PlayerContorller : CharacterBase ,IStateMachineOwner
     }
 
     #endregion
-    
-    
-    
+
+
 }
+
+

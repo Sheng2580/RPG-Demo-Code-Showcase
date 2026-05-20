@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -64,7 +64,7 @@ public class StartPlayerPanel : BasePanel
 
     private void OnEnable()
     {
-        EventCenter.Instance.AddEventListener(GameEvent.剪影化, SetFactor);
+        EventCenter.Instance.AddEventListener(GameEvent.鍓奖鍖? SetFactor);
         Canvas.willRenderCanvases += HandleWillRenderCanvases;
         QueuePreviewSetup(true);
     }
@@ -86,7 +86,7 @@ public class StartPlayerPanel : BasePanel
 
     private void OnDisable()
     {
-        EventCenter.Instance.RemoveEventListener(GameEvent.剪影化, SetFactor);
+        EventCenter.Instance.RemoveEventListener(GameEvent.鍓奖鍖? SetFactor);
 
         if (silhouetteCoroutine != null)
         {
@@ -241,10 +241,7 @@ public class StartPlayerPanel : BasePanel
             return true;
         }
 
-        // if (ShootPlayerManager.Instance != null && ShootPlayerManager.Instance.startPlayer != null)
-        // {
-        //     previewCamera = ShootPlayerManager.Instance.startPlayer.camera;
-        // }
+        if (ShootPlayerManager.Instance != null && ShootPlayerManager.Instance.startPlayer != null)
 
         if (previewCamera == null)
         {
@@ -403,3 +400,5 @@ public class StartPlayerPanel : BasePanel
         rect.localScale = Vector3.one;
     }
 }
+
+

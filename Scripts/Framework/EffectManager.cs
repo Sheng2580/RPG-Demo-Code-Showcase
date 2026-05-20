@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectMgr : UnitySingleTonMono<EffectMgr>
+public class EffectManager : UnitySingleTonMono<EffectManager>
 {
     private class PlayingEffect
     {
@@ -22,11 +22,11 @@ public class EffectMgr : UnitySingleTonMono<EffectMgr>
             return;
         }
 
-        PoolMgr.Instance.GetObjForAB(abName, effectName, effectObj =>
+        PoolManager.Instance.GetObjForAB(abName, effectName, effectObj =>
         {
             if (effectObj == null)
             {
-                Debug.LogError("[EffectMgr] Load effect failed: " + effectName);
+                Debug.LogError("[EffectManager] Load effect failed: " + effectName);
                 return;
             }
 
@@ -94,7 +94,7 @@ public class EffectMgr : UnitySingleTonMono<EffectMgr>
                 continue;
             }
 
-            PoolMgr.Instance.pushObj(effect.poolName, effect.obj);
+            PoolManager.Instance.pushObj(effect.poolName, effect.obj);
             playingEffects.RemoveAt(i);
         }
     }
@@ -133,3 +133,5 @@ public class EffectMgr : UnitySingleTonMono<EffectMgr>
         }
     }
 }
+
+

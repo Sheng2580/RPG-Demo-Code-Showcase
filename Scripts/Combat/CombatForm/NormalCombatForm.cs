@@ -1,35 +1,27 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NormalCombatForm : CombatFormBase
 {
     private const string BranchAttackSoundName = "PP";
 
-    // 当前普通攻击段数据。
     private NormalAttackData currentNormalAttackData;
 
-    // 当前分支攻击段数据。
     private BranchAttackData currentBranchAttackData;
 
-    // 当前攻击是否是分支攻击。
     private bool isBranchAttack;
 
-    // 当前分支位移计时器版本号。
     private int branchMoveVersion;
 
-    // 当前分支位移剩余时间。
     private float branchMoveRemainTime;
 
-    // 当前分支每秒位移速度。
     private float branchMoveSpeed;
 
-    // 当前分支位移方向。
     private Vector3 branchMoveDirection;
     private bool branchMoveHitStunImmuneActive;
     private const string PacManPoolName = "Summon/PacMan";
     private bool skillPacManSpawned;
     private string currentSkillAnimationName;
 
-    // 当前形态类型。
     public override CombatFormType FormType => CombatFormType.Normal;
 
     public override void EnterForm(CombatContext context, CombatFormData formData)
@@ -123,11 +115,9 @@ public class NormalCombatForm : CombatFormBase
         RegisterAttackDetectionTimers(branchData.triggerHits, version);
         OpenNextAttackWindow(branchData.nextAttackTime, version);
         OpenMoveCancelWindow(branchData.cdTime, version);
-        MusicMgr.Instance.PlaySoundForAB(BranchAttackSoundName, player.transform.position);
+        MusicManager.Instance.PlaySoundForAB(BranchAttackSoundName, player.transform.position);
         StartBranchMoveHitStunImmune();
         StartBranchDisplacement(branchData, version);
-        // GameEvent 第 8 项是“生成残影”，这里用枚举序号避免旧枚举文件编码影响编译。
-        EventCenter.Instance.EventTrigger((GameEvent)8, Color.red);
         return true;
     }
 
@@ -210,12 +200,12 @@ public class NormalCombatForm : CombatFormBase
 
     private void SpawnPacMan()
     {
-        if (player == null || PoolMgr.Instance == null)
+        if (player == null || PoolManager.Instance == null)
         {
             return;
         }
 
-        GameObject obj = PoolMgr.Instance.getObj(PacManPoolName);
+        GameObject obj = PoolManager.Instance.getObj(PacManPoolName);
         PacMan pacMan = obj.GetComponent<PacMan>();
         if (pacMan == null)
         {
@@ -294,9 +284,8 @@ public class NormalCombatForm : CombatFormBase
 
         return player != null ? player.transform.forward : Vector3.forward;
     }
-    
-    //空中状态
-    
-    
-    
+
+
 }
+
+

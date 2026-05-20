@@ -3,35 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicMgr : UnitySingleTonMono<MusicMgr>
+public class MusicManager : UnitySingleTonMono<MusicManager>
 {
-    private AudioSource bkMusic; //音频组件
-    private float bkVolume = 1; //背景音乐大小
-    private float soundVolume = 1; //音效大小
+    private AudioSource bkMusic;
+    private float bkVolume = 1;
+    private float soundVolume = 1;
     private Coroutine bgMusicTransitionCoroutine;
     private string currentBkMusicName;
     private int bgMusicRequestId;
     private const float DefaultBGMusicFadeDuration = 1f;
-    
+
     private List<AudioSource> soundlist = new List<AudioSource>();
 
-    /// <summary>
-    /// 播放背景音乐  在一个对象上放音频组件   
-    /// </summary>
     public void PlayBGMusic(string name)
     {
-        //加载背景音乐 
-        AudioClip clip = ResMgr.Instance.load<AudioClip>("Music/BG/" + name);
+        AudioClip clip = ResourceManager.Instance.load<AudioClip>("Music/BG/" + name);
         if (clip == null)
         {
-            Debug.LogError("[MusicMgr] Load bgm failed: " + name);
+            Debug.LogError("[MusicManager] Load bgm failed: " + name);
             return;
         }
 
         SwitchBGMusic(clip, "Resources:" + name, DefaultBGMusicFadeDuration);
     }
-    
-    
+
+
     public void PlayBGMusicForAB(string name)
     {
         int requestId = ++bgMusicRequestId;
@@ -44,7 +40,7 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
 
             if (clip == null)
             {
-                Debug.LogError("[MusicMgr] Load bgm failed: " + name);
+                Debug.LogError("[MusicManager] Load bgm failed: " + name);
                 return;
             }
 
@@ -52,11 +48,7 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
         });
     }
 
-    
 
-    /// <summary>
-    /// 停止背景音乐
-    /// </summary>
     public void StopBKMusic()
     {
         if (bkMusic == null) return;
@@ -65,9 +57,6 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
         bkMusic.Stop();
     }
 
-    /// <summary>
-    /// 暂停背景音乐
-    /// </summary>
     public void PauseBKMusic()
     {
         if (bkMusic == null) return;
@@ -185,32 +174,24 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
         bgMusicTransitionCoroutine = null;
     }
 
-    /// <summary>
-    /// 播放音效
-    /// </summary>
-    /// <param name="soundName"></param>
     public void PlaySound(string soundName, bool isLoop = false)
     {
-        //获取音频对象 
-        GameObject soundObj = PoolMgr.Instance.getObj("Music/Sound/" + soundName);
-        //获取音频组件
+        GameObject soundObj = PoolManager.Instance.getObj("Music/Sound/" + soundName);
         AudioSource source = soundObj.GetComponent<AudioSource>();
         if (soundObj.GetComponent<AudioSource>() == null) 
-            source = soundObj.AddComponent<AudioSource>();//如果音频组件为空则添加一个音频组件
-        source.clip = ResMgr.Instance.load<AudioClip>("Music/Sound/" + soundName);//加载音频文件
-        source.volume = soundVolume;//设置音效大小
-        source.loop = isLoop;//设置是否要循环播放
+            source = soundObj.AddComponent<AudioSource>();
+        source.clip = ResourceManager.Instance.load<AudioClip>("Music/Sound/" + soundName);
+        source.volume = soundVolume;
+        source.loop = isLoop;
         source.Play();
-        soundlist.Add(source);//将音频组件添加到音效列表中 
+        soundlist.Add(source);
     }
 
-    //默认位音效文件夹
     public void PlaySoundForAB(string soundName,string abName = "sound", bool isLoop = false)
     {
         PlaySoundForABInternal(soundName, null, abName, isLoop);
     }
 
-    // Play an AB sound at a world position. Useful for hit sounds and attack sounds in combat.
     public void PlaySoundForAB(string soundName, Vector3 worldPosition, string abName = "sound", bool isLoop = false)
     {
         PlaySoundForABInternal(soundName, worldPosition, abName, isLoop);
@@ -223,19 +204,17 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
             return;
         }
 
-        //获取音频对象  //第一次肯定拿不到
-        GameObject soundObj = PoolMgr.Instance.getObj(soundName);
+        GameObject soundObj = PoolManager.Instance.getObj(soundName);
         if (worldPosition.HasValue)
         {
             soundObj.transform.position = worldPosition.Value;
         }
 
-        //获取音频组件
         AudioSource source = soundObj.GetComponent<AudioSource>();
         if (soundObj.GetComponent<AudioSource>() == null) 
-            source = soundObj.AddComponent<AudioSource>();//如果音频组件为空则添加一个音频组件
+            source = soundObj.AddComponent<AudioSource>();
         source.spatialBlend = worldPosition.HasValue ? 1f : 0f;
-        //source.clip = ResMgr.Instance.load<AudioClip>("Music/Sound/" + soundName);//加载音频文件
+        source.clip = ResourceManager.Instance.load<AudioClip>("Music/Sound/" + soundName);
          ABManager.Instance.LoadResAsync(abName,soundName,typeof(AudioClip), (obj) =>
         {
             if (source == null)
@@ -246,23 +225,19 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
             AudioClip clip = obj as AudioClip;
             if (clip == null)
             {
-                Debug.LogError("[MusicMgr] Load sound failed: " + soundName);
-                PoolMgr.Instance.pushObj(soundName, soundObj);
+                Debug.LogError("[MusicManager] Load sound failed: " + soundName);
+                PoolManager.Instance.pushObj(soundName, soundObj);
                 return;
             }
 
-            //加载完事件
             source.clip = clip;
-            source.volume = soundVolume;//设置音效大小
-            source.loop = isLoop;//设置是否要循环播放
+            source.volume = soundVolume;
+            source.loop = isLoop;
             source.Play();
-            soundlist.Add(source);//将音频组件添加到音效列表中 
+            soundlist.Add(source);
         });
     }
-    
-    /// <summary>
-    /// 停止音效
-    /// </summary>
+
     public void StopSound(string soundName, AudioSource source)
     {
         if (source == null)
@@ -275,7 +250,7 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
         {
             soundlist.Remove(source);
             source.Stop();
-            PoolMgr.Instance.pushObj(soundName, source.gameObject);
+            PoolManager.Instance.pushObj(soundName, source.gameObject);
         }
     }
 
@@ -308,9 +283,11 @@ public class MusicMgr : UnitySingleTonMono<MusicMgr>
             string soundName = soundlist[i].name;
             if (!soundlist[i].isPlaying)
             {
-                PoolMgr.Instance.pushObj(soundName, soundlist[i].gameObject);
+                PoolManager.Instance.pushObj(soundName, soundlist[i].gameObject);
                 soundlist.RemoveAt(i);
             }
         }
     }
 }
+
+

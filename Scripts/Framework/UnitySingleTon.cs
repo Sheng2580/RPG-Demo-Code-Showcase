@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitySingleTon<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -73,10 +73,11 @@ public class UnitySingleTon<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (instance == this)
         {
-            // Scene unload should not permanently block this singleton type from being recreated.
             isShuttingDown = isApplicationQuitting;
             instance = null;
             wasAutoCreated = false;
         }
     }
 }
+
+

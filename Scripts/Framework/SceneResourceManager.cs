@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,13 +11,13 @@ public class ScenePreloadAssetInfo
 
 public abstract class SceneResourceManager<T> : UnitySingleTon<T> where T : MonoBehaviour
 {
-    [Header("场景开始时需要预加载的资源")]
+    [Header("鍦烘櫙寮€濮嬫椂闇€瑕侀鍔犺浇鐨勮祫婧?)]
     [SerializeField] private List<ScenePreloadAssetInfo> preloadAssets = new List<ScenePreloadAssetInfo>();
 
-    [Header("场景销毁时需要卸载的AB包")]
+    [Header("鍦烘櫙閿€姣佹椂闇€瑕佸嵏杞界殑AB鍖?)]
     [SerializeField] private List<string> unloadAbNames = new List<string>();
 
-    [Header("卸载AB包时是否同时卸载已加载对象")]
+    [Header("鍗歌浇AB鍖呮椂鏄惁鍚屾椂鍗歌浇宸插姞杞藉璞?)]
     [SerializeField] private bool unloadAllLoadedObjects;
 
     private readonly HashSet<string> loadedAssetKeys = new HashSet<string>();
@@ -25,7 +25,7 @@ public abstract class SceneResourceManager<T> : UnitySingleTon<T> where T : Mono
     protected virtual void Start()
     {
         StartCoroutine(LoadSceneResources());
-        
+
     }
 
     private IEnumerator LoadSceneResources()
@@ -117,3 +117,5 @@ public abstract class SceneResourceManager<T> : UnitySingleTon<T> where T : Mono
         return $"{abName}/{assetName}";
     }
 }
+
+

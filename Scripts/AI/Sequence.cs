@@ -1,30 +1,28 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-//顺序执行器
 public class Sequence : Composite
 {
-    protected LinkedListNode<Behavior> currentChild;//当前运行的子节点
+    protected LinkedListNode<Behavior> currentChild;
     protected override void OnInitialize()
     {
-        currentChild = children.First;//从第一个子节点开始
+        currentChild = children.First;
     }
     protected override EStatus OnUpdate()
     {
         while(true)
         {
-            var s = currentChild.Value.Tick();//记录子节点运行返回的结果状态
+            var s = currentChild.Value.Tick();
             /*
-            如果子节点运行，还没有成功，就直接返回该结果。
-            是「运行中」那就表明本节点也是运行中，有记录当前节点，下次还会继续执行；
-            是「失败」就表明本节点也运行失败了，下次会再经历OnInitialize，从头开始。
+            濡傛灉瀛愯妭鐐硅繍琛岋紝杩樻病鏈夋垚鍔燂紝灏辩洿鎺ヨ繑鍥炶缁撴灉銆?
+            鏄€岃繍琛屼腑銆嶉偅灏辫〃鏄庢湰鑺傜偣涔熸槸杩愯涓紝鏈夎褰曞綋鍓嶈妭鐐癸紝涓嬫杩樹細缁х画鎵ц锛?
+            鏄€屽け璐ャ€嶅氨琛ㄦ槑鏈妭鐐逛篃杩愯澶辫触浜嗭紝涓嬫浼氬啀缁忓巻OnInitialize锛屼粠澶村紑濮嬨€?
             */
             if( s != EStatus.Success)
                 return s;
-            //如果运行成功，就换到下一个子节点
             currentChild = currentChild.Next;
-            //如果全都成功运行完了，就返回「成功」
             if(currentChild == null)
                 return EStatus.Success;
         }
     }
 }
+

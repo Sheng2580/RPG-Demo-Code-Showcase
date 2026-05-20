@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyWeapon : WeaponBase
 {
@@ -22,3 +22,5 @@ public class EnemyWeapon : WeaponBase
         player.RegisterEnemyDamage(attackOwner != null ? attackOwner : transform, damage);
     }
 }
+
+

@@ -1,50 +1,36 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CombatFormBase : ICombatForm
 {
     private const string SlideSkillSwordPoolName = "Summon/Sword";
 
-    // 当前形态所属的形态控制器。
     protected CombatFormController controller;
 
-    // 当前形态运行所需的上下文。
     protected CombatContext context;
 
-    // 当前形态所属的玩家控制器。
     protected PlayerContorller player;
 
-    // 当前玩家的战斗属性和能量数据。
     protected PlayerCombatStats stats;
 
-    // 当前形态的配置数据。
     protected CombatFormData formData;
 
-    // 当前形态绑定的技能表。
     protected CombatSkillSetData skillSetData;
 
-    // 当前形态绑定的武器连招数据。
     protected WeaponComboData weaponComboData;
 
-    // 当前攻击版本号，用于让旧计时器失效。
     protected int attackVersion;
 
-    // 当前是否处于攻击或技能动画中。
     protected bool isAttacking;
 
-    // 当前攻击是否已经打开连招窗口。
     protected bool canNextAttack;
 
-    // 当前攻击是否已经允许移动取消。
     protected bool canMoveCancel;
 
-    // 当前攻击动画允许回 Idle 的 normalizedTime。
     protected float currentAttackEndTime = 0.95f;
 
-    // 每个技能槽位的冷却结束时间。
     protected readonly Dictionary<SkillSlot, float> skillCooldownEndTimes = new Dictionary<SkillSlot, float>();
 
-    // 当前形态类型，由子类固定返回。
     public abstract CombatFormType FormType { get; }
 
     public virtual void EnterForm(CombatContext context, CombatFormData formData)
@@ -120,7 +106,7 @@ public abstract class CombatFormBase : ICombatForm
     {
         player?.model?.ClearRootMotionAction();
     }
-    
+
 
     public virtual void OnAttackEnter()
     {
@@ -337,14 +323,14 @@ public abstract class CombatFormBase : ICombatForm
 
     protected virtual void SpawnSlideSkillSword()
     {
-        if (player == null || PoolMgr.Instance == null)
+        if (player == null || PoolManager.Instance == null)
         {
             return;
         }
 
         player.FaceLockEnemyImmediate();
 
-        GameObject obj = PoolMgr.Instance.getObj(SlideSkillSwordPoolName);
+        GameObject obj = PoolManager.Instance.getObj(SlideSkillSwordPoolName);
         obj.transform.position = player.transform.position + Vector3.up * 0.9f + player.transform.forward * 1.1f;
         obj.transform.rotation = Quaternion.LookRotation(player.transform.forward, Vector3.up);
 
@@ -679,12 +665,12 @@ public abstract class CombatFormBase : ICombatForm
 
         if (!string.IsNullOrEmpty(skillData.castSoundName))
         {
-            MusicMgr.Instance.PlaySoundForAB(skillData.castSoundName, player.transform.position);
+            MusicManager.Instance.PlaySoundForAB(skillData.castSoundName, player.transform.position);
         }
 
         if (skillData.castEffect != null && !string.IsNullOrEmpty(skillData.castEffect.effectsName))
         {
-            EffectMgr.Instance.PlayEffectForAB(skillData.castEffect, player.transform);
+            EffectManager.Instance.PlayEffectForAB(skillData.castEffect, player.transform);
         }
     }
 
@@ -733,10 +719,8 @@ public abstract class CombatFormBase : ICombatForm
             Time.deltaTime * 12f
         );
     }
-    
-    
-    
-    //通过名字判断当前状态 并获得当前状态进行的值
+
+
     protected virtual bool CurrAnimationStateName(string stateName , out float normalizedTime ,int layer = 0)
     {
         AnimatorStateInfo nextInfo = player.model.animator.GetNextAnimatorStateInfo(layer);
@@ -749,7 +733,7 @@ public abstract class CombatFormBase : ICombatForm
         normalizedTime = info.normalizedTime;
         return info.IsName(stateName);
     }
-   
+
     protected virtual bool CurrAnimationStateName(string stateName ,int layer = 0)
     {
         AnimatorStateInfo nextInfo = player.model.animator.GetNextAnimatorStateInfo(layer);
@@ -774,3 +758,5 @@ public abstract class CombatFormBase : ICombatForm
         return info.IsTag(tag);
     }
 }
+
+

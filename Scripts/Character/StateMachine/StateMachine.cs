@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 public class StateMachine
@@ -127,3 +127,5 @@ public class StateMachine
         return state;
     }
 }
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Prop : MonoBehaviour
 {
@@ -92,3 +92,5 @@ public class Prop : MonoBehaviour
       center = centerTrans != null ? centerTrans.GetComponent<RectTransform>() : GetComponent<RectTransform>();
    }
 }
+
+

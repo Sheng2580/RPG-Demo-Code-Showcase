@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerState : StateBase
 {
@@ -7,17 +7,16 @@ public class PlayerState : StateBase
     private float _angleVelocity = 0f;
     protected PlayerContorller Player;
     private float _camYaw;
-    
+
     public override void Init(IStateMachineOwner owner)
    {
       base.Init(owner);
       Player=(PlayerContorller)owner;
       _mainCamera= Camera.main.transform;
    }
-    
+
    protected void MoldRotate()
    {
-      // ====================== 你的原有代码 一行不改 ======================
       Vector2 input = GameInputManger.Instance.Movement;
       Vector3 inputDir = new Vector3(input.x, 0f, input.y);
       if (inputDir.sqrMagnitude < 0.0001f) return;
@@ -35,7 +34,7 @@ public class PlayerState : StateBase
       worldDir.Normalize();
 
       float targetAngle = Mathf.Atan2(worldDir.x, worldDir.z) * Mathf.Rad2Deg;
-      
+
       targetAngle -= Player.sitFreeLookCam.RotateFixAngle; 
 
 
@@ -49,7 +48,6 @@ public class PlayerState : StateBase
       );
       Player.transform.eulerAngles = Vector3.up * smoothedY;
    }
-   //通过名字判断当前状态 并获得当前状态进行的值
    protected virtual bool CurrAnimationStateName(string stateName , out float normalizedTime ,int layer = 0)
    {
       normalizedTime = 0f;
@@ -68,7 +66,7 @@ public class PlayerState : StateBase
       normalizedTime = info.normalizedTime;
       return info.IsName(stateName);
    }
-   
+
    protected virtual bool CurrAnimationStateName(string stateName ,int layer = 0)
    {
       if (!TryGetAnimator(out Animator animator))
@@ -115,10 +113,12 @@ public class PlayerState : StateBase
       animator = Player.model.animator;
       return true;
    }
-   
+
    protected virtual void OnRootMotionAction(Vector3 dir, Quaternion rot)
    {
       Player.characterController.Move(dir);
    }
-    
+
 }
+
+

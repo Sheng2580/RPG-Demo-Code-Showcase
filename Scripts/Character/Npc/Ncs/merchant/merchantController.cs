@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class merchantController : NPCBase, IStateMachineOwner
@@ -20,28 +20,27 @@ public class merchantController : NPCBase, IStateMachineOwner
 
    public void InitActions()
    {
-      if (SceneMgr.Instance.GetCurrSceneName() == "hall")
+      if (GameSceneManager.Instance.GetCurrSceneName() == "hall")
       {
-         AddAction("对话", OpenDialoguePanel);
-         AddAction("打开商店", () => TestFun(1));
+         AddAction("瀵硅瘽", OpenDialoguePanel);
+         AddAction("鎵撳紑鍟嗗簵", () => TestFun(1));
       }
       else
       {
-         AddAction("打开商店", () =>
+         AddAction("鎵撳紑鍟嗗簵", () =>
          {
-            EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, false);
-            EventCenter.Instance.EventTrigger(GameEvent.角色战斗控制,false);
+            EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? false);
+            EventCenter.Instance.EventTrigger(GameEvent.瑙掕壊鎴樻枟鎺у埗,false);
             UIManager.Instance.OpenPanel<merchantPanel>();
          });
       }
    }
 
-   //打开对应和退出对应面板的方法
    private void TestFun(int n)
    {
       Debug.Log("TestFun " + n);
-      EventCenter.Instance.EventTrigger(GameEvent.设置玩家摄像机, false);
-      EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, false);
+      EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁鎽勫儚鏈? false);
+      EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? false);
       _npcModle.lookAtCamera.gameObject.SetActive(true);
       HallManager.Instance.currentCamera = _npcModle.lookAtCamera;
       bool prevHeadRota = _npcModle != null && _npcModle.isHeadRota;
@@ -69,10 +68,10 @@ public class merchantController : NPCBase, IStateMachineOwner
                _npcModle.SetHeadRotationEnabled(prevHeadRota);
             }
 
-            EventCenter.Instance.EventTrigger(GameEvent.设置玩家摄像机, true);
-            EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, true);
+            EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁鎽勫儚鏈? true);
+            EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? true);
             _npcModle.lookAtCamera.gameObject.SetActive(false);
-            EventCenter.Instance.EventTrigger(GameEvent.玩家检测Npc);
+            EventCenter.Instance.EventTrigger(GameEvent.鐜╁妫€娴婲pc);
             PostProcessingManager.Instance?.AnimateDepthOfFieldTo(10f, 0.6f);
             panel.OnPanelClosed -= onClose;
          };
@@ -81,3 +80,5 @@ public class merchantController : NPCBase, IStateMachineOwner
       });
    }
 }
+
+

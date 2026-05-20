@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +10,12 @@ public class NpcIdle : NpcStateBase
         npcModle.SetRootMotionAction(OnRootMotionAction);
         npcModle.isHeadRota = true;
     }
-    
+
 
     public override void Exit()
     {
         npcModle.ClearRootMotionAction();
     }
 }
+
+

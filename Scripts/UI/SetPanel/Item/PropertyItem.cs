@@ -1,19 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PropertyItem : MonoBehaviour
 {
-  //该属性对应的图片
   private Image _propertyImage;
-  //该属性的名字 （攻击力）
   private Text _propertyName;
-  
-  //该属性的总数值(基础加上加成Buff的结果)
+
   private Text _sumValue;
-  
-  //该属性的附加数值（buff提供的）
+
   private Text _buffValue;
 
 
@@ -104,3 +100,5 @@ public class PropertyItem : MonoBehaviour
     return null;
   }
 }
+
+

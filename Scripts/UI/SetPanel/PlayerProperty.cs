@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerProperty : MonoBehaviour
 {
@@ -74,3 +74,5 @@ public class PlayerProperty : MonoBehaviour
       }
    }
 }
+
+

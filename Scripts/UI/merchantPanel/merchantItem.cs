@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
 {
     public Color SelectColor;
     public Text priceText;
-    
+
     private Material _material;
     private Image _itemImage;
     private Image _maskImage;
@@ -21,11 +21,9 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
     private Color _originalColor;
     private Vector3 _originalScale;
     private int _iconLoadVersion;
-    // 当前商品数据
     public commodityClass Commodity { get; private set; }
-    // 点击回调（由外部注册，传回本项）
     public Action<merchantItem> OnClicked;
-    
+
     private void Awake()
     {
         _itemImage = GetComponent<Image>();
@@ -35,7 +33,7 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
         _iconImage=transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<Image>();
         _text = transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>();
         _material = _itemImage.material;
-        
+
     }
 
     private void OnEnable()
@@ -45,7 +43,7 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
         _sTweener.Pause();
         _imageTweener.Pause();
     }
-    
+
 
     private void OnDisable()
     {
@@ -57,11 +55,9 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
 
     private void Start()
     {
-        //SelectThisItem();
     }
-    
 
-    //外部生成初始化
+
     public void InitMerchantItem(commodityClass  commodity)
     {
         Commodity = commodity;
@@ -95,10 +91,7 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
             }
         });
     }
-    
-    /// <summary>
-    /// 选择该item
-    /// </summary>
+
     public void SelectThisItem()
     {
         if (_imageTweener != null)
@@ -117,9 +110,6 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
 
     public void CancelThisItem()
     {
-        // 取消选择：立即恢复到选择前状态，不播放反向动画
-        // 说明：有时 tweener 的状态（比如使用 Goto+Pause）会导致 PlayBackwards 不生效，
-        // 因此这里使用立即还原视觉状态并重置/暂停 tweens，保证返回到初始外观。
         if (_itemImage != null)
         {
             _itemImage.enabled = true;
@@ -130,10 +120,8 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
             _maskImage.enabled = false;
         }
 
-        // 立即恢复缩放到记录的原始值，避免依赖反向播放
         transform.localScale = _originalScale;
 
-        // 把 tweens 回滚到起始状态并暂停，确保下次 Select 时能从正确状态播放
         try
         {
             _imageTweener?.Rewind();
@@ -148,22 +136,23 @@ public class merchantItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandl
         }
         catch { /* ignore if tween state invalid */ }
     }
-    
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_maskImage != null && _maskImage.enabled) return; // 已选中则不播放
+        if (_maskImage != null && _maskImage.enabled) return;
         _sTweener?.PlayForward();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (_maskImage != null && _maskImage.enabled) return; // 已选中则不播放
+        if (_maskImage != null && _maskImage.enabled) return;
         _sTweener?.PlayBackwards();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // 点击时通知面板或外部回调，由 panel 负责处理选择切换逻辑
         OnClicked?.Invoke(this);
     }
 }
+
+

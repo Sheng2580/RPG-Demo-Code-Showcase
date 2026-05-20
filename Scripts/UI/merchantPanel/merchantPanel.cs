@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -52,9 +52,9 @@ public class merchantPanel : BasePanel
     public override void Show()
     {
         base.Show();
-        specialTipPanel.Open("商店");
+        specialTipPanel.Open("鍟嗗簵");
         RebuildFromSceneStock();
-        if (SceneMgr.Instance.GetCurrSceneName() != "hall")
+        if (GameSceneManager.Instance.GetCurrSceneName() != "hall")
         {
             UIManager.Instance.ClosePanel<PlayerPnael>();
         }
@@ -65,11 +65,11 @@ public class merchantPanel : BasePanel
         UIManager.Instance.ClosePanel<specialTipPanel>();
         base.Hide();
         OnPanelClosed?.Invoke();
-        if (SceneMgr.Instance.GetCurrSceneName() != "hall")
+        if (GameSceneManager.Instance.GetCurrSceneName() != "hall")
         {
             UIManager.Instance.OpenPanel<PlayerPnael>();
-            EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态, true);
-            EventCenter.Instance.EventTrigger(GameEvent.角色战斗控制,true);
+            EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€? true);
+            EventCenter.Instance.EventTrigger(GameEvent.瑙掕壊鎴樻枟鎺у埗,true);
         }
     }
 
@@ -363,3 +363,5 @@ public class merchantPanel : BasePanel
         }
     }
 }
+
+

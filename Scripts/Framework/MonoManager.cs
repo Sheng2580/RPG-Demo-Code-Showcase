@@ -1,10 +1,7 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// 继承MonoBehaviour的 公共mono的类  注册更新的逻辑    
-/// </summary>
 public class MonoManager : UnitySingleTonMono<MonoManager>
 {
     private Action updateAction;
@@ -21,7 +18,7 @@ public class MonoManager : UnitySingleTonMono<MonoManager>
     {
         updateAction -= action;
     }
-    
+
     public void AddFixedUpdateListener(Action action)
     {
         FixedUpdateAction += action;
@@ -39,7 +36,7 @@ public class MonoManager : UnitySingleTonMono<MonoManager>
     {
         OnAnimatorIKAction += action;
     }
-    
+
     public void RemoveLateUpdateListener(Action action)
     {
         lateUpdateAction -= action;
@@ -65,5 +62,7 @@ public class MonoManager : UnitySingleTonMono<MonoManager>
         FixedUpdateAction?.Invoke();    
     }
 
-  
+
 }
+
+

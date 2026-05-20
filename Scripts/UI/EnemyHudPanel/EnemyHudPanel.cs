@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHudPanel : BasePanel
@@ -272,3 +272,5 @@ public class EnemyHudPanel : BasePanel
         root.anchoredPosition = Vector2.zero;
     }
 }
+
+

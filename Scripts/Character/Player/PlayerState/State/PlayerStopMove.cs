@@ -1,4 +1,4 @@
-
+﻿
 public class PlayerStopMove : PlayerState
 {
     public override void Enter()
@@ -22,7 +22,7 @@ public class PlayerStopMove : PlayerState
         }
         Player.model.SetRootMotionAction(OnRootMotionAction);
     }
-    
+
     public override void Update()
     {
         if (CurrAnimationStateTag("Stop", out float time))
@@ -41,7 +41,7 @@ public class PlayerStopMove : PlayerState
                     Player.ChangeState(PlayerStateType.Idle);
                 }
             }
-            
+
         }
     }
 
@@ -57,5 +57,7 @@ public class PlayerStopMove : PlayerState
             Player.model.ClearRootMotionAction();
         }
     }
-    
+
 }
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public enum WeaponDetectionType
@@ -9,23 +9,16 @@ public enum WeaponDetectionType
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    [Header("判定基础配置")]
-    // 判定目标所在 Layer，敌人武器填 Player，玩家武器填 Enemy。
+    [Header("鍒ゅ畾鍩虹閰嶇疆")]
     public LayerMask targetLayerMask;
-    // 判定形状：球形适合拳脚，盒形适合剑、枪、爪等有方向的武器。
     public WeaponDetectionType detectionType = WeaponDetectionType.Box;
-    // 判定原点，不填时默认使用当前武器物体。
     public Transform detectionOrigin;
-    // 相对判定原点的本地偏移，用于把判定盒移动到刀刃、拳头、枪尖等位置。
     public Vector3 localOffset = Vector3.forward * 0.5f;
-    // 球形判定半径。
     public float sphereRadius = 0.5f;
-    // 盒形判定尺寸。
     public Vector3 boxSize = new Vector3(0.6f, 0.6f, 1f);
-    // 是否检测 Trigger Collider。
     public QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Collide;
 
-    [Header("调试绘制")]
+    [Header("璋冭瘯缁樺埗")]
     public bool drawWeaponGizmos = true;
     public Color gizmoColor = new Color(1f, 0.2f, 0.05f, 0.85f);
 
@@ -130,3 +123,5 @@ public abstract class WeaponBase : MonoBehaviour
         Gizmos.matrix = oldMatrix;
     }
 }
+
+

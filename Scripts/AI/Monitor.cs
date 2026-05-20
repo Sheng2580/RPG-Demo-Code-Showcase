@@ -1,8 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//监视器
 public class Monitor: Parallel
 {
     public Monitor(Policy mSuccessPolicy, Policy mFailurePolicy)
@@ -18,3 +17,4 @@ public class Monitor: Parallel
         children.AddLast(action);
     }
 }
+

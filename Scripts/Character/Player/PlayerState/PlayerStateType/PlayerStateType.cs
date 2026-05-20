@@ -1,4 +1,4 @@
-public enum PlayerStateType
+﻿public enum PlayerStateType
 {
    Idle,
    Move,
@@ -14,3 +14,5 @@ public enum PlayerStateType
    CutAWeapon,
    CutBWeapon,
 }
+
+

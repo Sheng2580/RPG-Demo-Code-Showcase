@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -17,7 +17,7 @@ public class NPCBase : CharacterBase, IStateMachineOwner, IInteractable
    public int npcID;
    public GameObject Player;
    public GameObject head;
-   
+
    public Dictionary<string, UnityAction> CurrNpcInteractionActions = new Dictionary<string, UnityAction>();
    public IReadOnlyDictionary<string, UnityAction> InteractionActions => CurrNpcInteractionActions;
 
@@ -80,7 +80,7 @@ public class NPCBase : CharacterBase, IStateMachineOwner, IInteractable
       {
          if (panel == null)
          {
-            Debug.LogWarning("[NPCBase] 打开 DialoguePanel 失败");
+            Debug.LogWarning("[NPCBase] 鎵撳紑 DialoguePanel 澶辫触");
             return;
          }
 
@@ -88,3 +88,5 @@ public class NPCBase : CharacterBase, IStateMachineOwner, IInteractable
       });
    }
 }
+
+

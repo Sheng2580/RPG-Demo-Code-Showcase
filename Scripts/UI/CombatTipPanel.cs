@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public enum CombatTipType
@@ -144,12 +144,12 @@ public class CombatTipPanel : BasePanel
 
     private void PlaySlideTipSound()
     {
-        if (string.IsNullOrEmpty(slideTipSoundName) || MusicMgr.Instance == null)
+        if (string.IsNullOrEmpty(slideTipSoundName) || MusicManager.Instance == null)
         {
             return;
         }
 
-        MusicMgr.Instance.PlaySoundForAB(slideTipSoundName, soundABName);
+        MusicManager.Instance.PlaySoundForAB(slideTipSoundName, soundABName);
     }
 
     public static void ShowForPlayer(PlayerContorller player, CombatTipType tipType, UILayer layer = UILayer.Top)
@@ -182,3 +182,5 @@ public class CombatTipPanel : BasePanel
         UIManager.Instance.ClosePanel<CombatTipPanel>();
     }
 }
+
+

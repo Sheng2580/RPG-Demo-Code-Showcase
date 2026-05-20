@@ -1,4 +1,4 @@
-public interface IWeaponCombat
+﻿public interface IWeaponCombat
 {
     void Equip(PlayerContorller owner, CombatFormController formController);
     void Unequip();
@@ -7,3 +7,5 @@ public interface IWeaponCombat
     void HandleHeavyAttack();
     void DetectHit(WeaponAttackData attackData, WeaponTriggerHit triggerHit);
 }
+
+

@@ -30,14 +30,8 @@ public class EventInfoMy<T> : IEventInfoMY
 
 public class EventCenter : SingleTon<EventCenter>
 {
-    //事件字典 
     public Dictionary<GameEvent, IEventInfoMY> eventDict = new Dictionary<GameEvent, IEventInfoMY>();
 
-    /// <summary>
-    /// 添加事件监听
-    /// </summary>
-    /// <param name="eventName">事件名字</param>
-    /// <param name="action">要执行的方法</param>
     public void AddEventListener(GameEvent sGameEvent, UnityAction action)
     {
         if (eventDict.ContainsKey(sGameEvent))
@@ -62,11 +56,6 @@ public class EventCenter : SingleTon<EventCenter>
         }
     }
 
-    /// <summary>
-    /// 移除事件监听  
-    /// </summary>
-    /// <param name="eventName"></param>
-    /// <param name="action"></param>
     public void RemoveEventListener(GameEvent sGameEvent, UnityAction action)
     {
         if (eventDict.ContainsKey(sGameEvent))
@@ -82,17 +71,13 @@ public class EventCenter : SingleTon<EventCenter>
             (eventDict[sGameEvent] as EventInfoMy<T>).actions -= action;
         }
     }
-/// <summary>
-/// 事件触发 
-/// </summary>
-/// <param name="eventName"></param>
     public void EventTrigger(GameEvent sGameEvent)
     {
         if (eventDict.ContainsKey(sGameEvent))
         {
             (eventDict[sGameEvent] as MyEventInfoMy).actions?.Invoke();  
         }
-        
+
     }
 public void EventTrigger<T>(GameEvent sGameEvent,T info)
     {
@@ -100,17 +85,14 @@ public void EventTrigger<T>(GameEvent sGameEvent,T info)
         {
             (eventDict[sGameEvent] as EventInfoMy<T>).actions?.Invoke(info);  
         }
-        
+
     }
-    
-    /// <summary>
-    /// 清空字典 
-    /// </summary>
+
     public void Clear()
     {
         eventDict.Clear();
     }
-    
-    
-    
+
+
 }
+

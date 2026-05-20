@@ -1,14 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyStateBase : StateBase
 {
     protected EnemyBase enemy;
-    
+
     public override void Init(IStateMachineOwner owner)
     {
         enemy = owner as EnemyBase;
     }
-    
+
     protected void PlayAnimation(string animationName, int layer = 0, float fixedTransitionTime = 0.25f)
     {
         if (enemy == null)
@@ -18,7 +18,7 @@ public class EnemyStateBase : StateBase
 
         enemy.PlayAnimation(animationName, layer, fixedTransitionTime);
     }
-    
+
     protected bool CheckAnimationState(string stateName, out float normalizedTime, int layer = 0)
     {
         if (enemy == null || enemy.model == null || enemy.model.animator == null)
@@ -38,3 +38,5 @@ public class EnemyStateBase : StateBase
         return info.IsName(stateName);
     }
 }
+
+

@@ -1,13 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuffItem : MonoBehaviour
 {
-    //buff对应的图片
     private Image _buffImage;
-    //buff的描述文本 (攻击力++ 增加20%攻击)
     private Text _buffText;
 
     private void Awake()
@@ -80,6 +78,8 @@ public class BuffItem : MonoBehaviour
 
         return null;
     }
-    
+
 
 }
+
+

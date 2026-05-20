@@ -1,7 +1,9 @@
-public enum CombatFormType
+﻿public enum CombatFormType
 {
     Normal,
     WeaponA,
     WeaponB,
     Transform
 }
+
+

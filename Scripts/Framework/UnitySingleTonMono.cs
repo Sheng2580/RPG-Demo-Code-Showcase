@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitySingleTonMono<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -80,3 +80,5 @@ public class UnitySingleTonMono<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 }
+
+

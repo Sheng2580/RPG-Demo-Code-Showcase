@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,16 +7,17 @@ public class ActiveSelector: Selector
     protected override EStatus OnUpdate()
     {
         var prev = currentChild;
-        base.OnInitialize();//注意这里，currentChild 会被赋值为 children.First
-        var res = base.OnUpdate();//按Selector的OnUpdate执行，顺序遍历选择
+        base.OnInitialize();
+        var res = base.OnUpdate();
         /*
-        只要不是遍历结束或可执行节点不变，都应该中断上一次执行的节点，无论优先是高是低。
-        因为如果当前优先级比之前的高，理应中断之前的；
-        而如果比之前的低，那就证明之前高优先级的行为无法继续了，
-        否则怎么会等到现在的低优先级的行为呢？所以也应中断它。
+        鍙涓嶆槸閬嶅巻缁撴潫鎴栧彲鎵ц鑺傜偣涓嶅彉锛岄兘搴旇涓柇涓婁竴娆℃墽琛岀殑鑺傜偣锛屾棤璁轰紭鍏堟槸楂樻槸浣庛€?
+        鍥犱负濡傛灉褰撳墠浼樺厛绾ф瘮涔嬪墠鐨勯珮锛岀悊搴斾腑鏂箣鍓嶇殑锛?
+        鑰屽鏋滄瘮涔嬪墠鐨勪綆锛岄偅灏辫瘉鏄庝箣鍓嶉珮浼樺厛绾х殑琛屼负鏃犳硶缁х画浜嗭紝
+        鍚﹀垯鎬庝箞浼氱瓑鍒扮幇鍦ㄧ殑浣庝紭鍏堢骇鐨勮涓哄憿锛熸墍浠ヤ篃搴斾腑鏂畠銆?
         */
         if(prev != null && currentChild != prev)
             prev.Value.Abort();
         return res;
     }
 }
+

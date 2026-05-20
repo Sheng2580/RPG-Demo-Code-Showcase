@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 public class TimeLineManager : UnitySingleTonMono<TimeLineManager>
 {
@@ -47,3 +47,5 @@ public class TimeLineManager : UnitySingleTonMono<TimeLineManager>
         playableDirector.Evaluate();
     }
 }
+
+

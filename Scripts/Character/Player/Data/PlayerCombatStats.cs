@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public struct DamageResult
@@ -294,3 +294,5 @@ public class PlayerCombatStats : MonoBehaviour
         return result.damage;
     }
 }
+
+

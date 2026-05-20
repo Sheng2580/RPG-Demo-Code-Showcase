@@ -1,4 +1,4 @@
-public interface ICombatForm
+﻿public interface ICombatForm
 {
     CombatFormType FormType { get; }
 
@@ -13,7 +13,7 @@ public interface ICombatForm
     void OnMoveEnter();
     void OnMoveUpdate();
     void OnMoveExit();
-    
+
     void OnFallEnter();
     void OnFallUpdate();
     void OnFallExit();
@@ -46,3 +46,5 @@ public interface ICombatForm
     void OnSlideAttackUpdate();
     void OnSlideAttackExit();
 }
+
+

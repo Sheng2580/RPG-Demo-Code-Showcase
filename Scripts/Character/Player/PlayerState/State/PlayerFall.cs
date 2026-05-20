@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,3 +19,5 @@ public class PlayerFall : PlayerState
         Player.combatFormController?.CurrentForm?.OnFallExit();
     }
 }
+
+

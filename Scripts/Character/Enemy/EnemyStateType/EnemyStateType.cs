@@ -1,4 +1,4 @@
-public enum EnemyStateType
+﻿public enum EnemyStateType
 {
     Idle,
     Patrol,
@@ -7,3 +7,5 @@ public enum EnemyStateType
     Attack,
     Dead
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,3 +14,5 @@ public class CombatSManager : SceneResourceManager<CombatSManager>
         LoadCanvas.Instance.Hied();
     }
 }
+
+

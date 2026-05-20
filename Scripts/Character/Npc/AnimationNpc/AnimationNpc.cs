@@ -1,7 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//普通npc仅播放动画
 public class AnimationNpc : MonoBehaviour
 {
     private Animator _animator;
@@ -10,8 +9,7 @@ public class AnimationNpc : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-    
-    //外部事件
+
     public void Holle()
     {
         _animator.SetBool("isHolle", true);
@@ -22,9 +20,8 @@ public class AnimationNpc : MonoBehaviour
     {
         _animator.SetBool("isHolle", true);
     }
-    
-  
-    
-    
-    
+
+
 }
+
+

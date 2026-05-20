@@ -22,7 +22,6 @@ public class PlayerModel : CharacterModelBase
     [HideInInspector]
     public FreeLookLeftShoulderFinal freeLookCamera;
     [Header("材质控制")]
-    // 需要统一控制外描边发光的材质名称，名称会自动忽略 Unity 生成的“(Instance)”后缀。
     [SerializeField] private List<string> outlineGlowMaterialNames = new List<string>
     {
         "日光",
@@ -32,34 +31,25 @@ public class PlayerModel : CharacterModelBase
         "髮"
     };
 
-    // 运行时缓存到的外描边发光材质实例。
     private readonly List<Material> outlineGlowMaterials = new List<Material>();
 
-    // 是否输出外描边发光调试日志。
     [SerializeField] private bool isDebugOutlineGlow = true;
 
-    // 开启外描边发光时写入的 Glow Width，宽度为 0 时即使颜色和强度正确也看不到外发光。
     [SerializeField] private float outlineGlowWidthWhenEnabled = 2.4f;
 
-    // 开启外描边发光时写入的 Glow Opacity。
     [SerializeField] private float outlineGlowOpacityWhenEnabled = 0.82f;
 
 
     [Header("配件")] public List<GameObject> transfigurationObjects;
     public GameObject wing;
-    
-    
+
 
     [Header("召唤物")]
     [SerializeField] private string motorcyclePoolName = "Summon/moT";
 
-    //大范围摄像头用于变身状态大招 
     [SerializeField]
     private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    
-        
-        
 
     #region 动画事件
     public void transfiguration()
@@ -99,11 +89,10 @@ public class PlayerModel : CharacterModelBase
 
         Motorcycle.SpawnOrbit(player, motorcyclePoolName);
     }
-    
+
     #endregion
-    
-    
-    
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -292,7 +281,7 @@ public class PlayerModel : CharacterModelBase
         }
     }
 
-   
+
     private void RefreshNpcList()
     {
         npcs.Clear();
@@ -379,13 +368,8 @@ public class PlayerModel : CharacterModelBase
             }
         });
     }
-    
-    
-    /// <summary>
-    /// 攻击检测
-    /// <param name="hit"></param>
-    /// <param name="interactableTarget"></param>
-    /// <returns></returns>
+
+
     private bool TryGetInteractableTarget(Collider hit, out GameObject interactableTarget)
     {
         interactableTarget = null;
@@ -408,7 +392,7 @@ public class PlayerModel : CharacterModelBase
     {
         return GetInteractableBehaviour(target) as IInteractable;
     }
-    
+
     private MonoBehaviour GetInteractableBehaviour(GameObject target)
     {
         if (target == null)
@@ -424,15 +408,11 @@ public class PlayerModel : CharacterModelBase
                 return behaviours[i];
             }
         }
-        
+
         return null;
     }
 
-    
-    /// <summary>
-    /// 转头
-    /// </summary>
-    /// <param name="layerIndex"></param>
+
     private void OnAnimatorIK(int layerIndex)
     {
         if (lookAtNpc == null && _lookAtWeight <= 0.001f)
@@ -476,12 +456,11 @@ public class PlayerModel : CharacterModelBase
         animator.SetBool("isUp", true);
     }
 
-    /// <summary>
-    /// npc检测范围
-    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
+
+

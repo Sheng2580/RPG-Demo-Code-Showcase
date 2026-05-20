@@ -16,3 +16,5 @@ public class SingleTon<T> where T : new()
     }
 
 }
+
+

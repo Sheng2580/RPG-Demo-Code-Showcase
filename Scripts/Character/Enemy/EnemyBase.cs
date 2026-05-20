@@ -1,20 +1,16 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-/// <summary>
-/// 敌人基类：保存所有敌人共用的数据、状态机入口和基础移动能力。
-/// 行为树负责“决定要做什么”，状态机负责“执行具体动作”。
-/// </summary>
 public abstract class EnemyBase : CharacterBase, IStateMachineOwner
 {
-    [Header("敌人基础数据")]
+    [Header("鏁屼汉鍩虹鏁版嵁")]
     public float moveSpeed = 3f;
     public float chaseSpeed = 5f;
     public float maxHp = 100f;
     [FormerlySerializedAs("attackRange")]
-    [Tooltip("AI 开始攻击的距离，不是伤害判定范围。真正命中范围由 EnemyWeapon 控制。")]
+    [Tooltip("AI 寮€濮嬫敾鍑荤殑璺濈锛屼笉鏄激瀹冲垽瀹氳寖鍥淬€傜湡姝ｅ懡涓寖鍥寸敱 EnemyWeapon 鎺у埗銆?)]
     public float attackStartRange = 2f;
     public float attackExitRangeOffset = 0.75f;
     public float detectRange = 10f;
@@ -33,7 +29,7 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
     public bool useRootMotionMovement = true;
     public float rootMotionSpeedScale = 1f;
 
-    [Header("动画状态名")]
+    [Header("鍔ㄧ敾鐘舵€佸悕")]
     public string idleAnimationName = "Idle";
     public string walkAnimationName = "Walk";
     public string runAnimationName = "Run";
@@ -44,18 +40,18 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
     public string hitAnimationName = "Hit";
     public string deadAnimationName = "Die";
 
-    [Header("受击")]
+    [Header("鍙楀嚮")]
     public float hitStunDuration = 0.35f;
     public float hitKnockbackDistance = 0.6f;
     public float hitKnockbackDuration = 0.12f;
 
-    [Header("目标")]
+    [Header("鐩爣")]
     public Transform target;
 
-    [Header("武器判定")]
+    [Header("姝﹀櫒鍒ゅ畾")]
     public EnemyWeapon enemyWeapon;
 
-    [Header("状态")]
+    [Header("鐘舵€?)]
     public EnemyStateType currentStateType;
     public bool isHit;
     public bool isDead;
@@ -164,18 +160,10 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
     {
         base.Update();
 
-        // 行为树每帧只做决策，真正的移动和动画由当前状态处理。
-        behaviorTree?.Tick();
     }
 
-    /// <summary>
-    /// 子类在这里组装自己的行为树，例如近战、远程、Boss 可以有不同决策。
-    /// </summary>
     protected abstract void InitBehaviorTree();
 
-    /// <summary>
-    /// 子类决定每个 EnemyStateType 对应哪一个状态类。
-    /// </summary>
     public abstract void ChangeState(EnemyStateType newState);
 
     public float DistanceToTarget()
@@ -200,9 +188,6 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
         navMeshAgent.nextPosition = transform.position;
     }
 
-    /// <summary>
-    /// 第一版使用 CharacterController 做直线移动；后续接 NavMeshAgent 时只需要替换这里。
-    /// </summary>
     public virtual void MoveTo(Vector3 targetPos, float speed)
     {
         if (characterController == null)
@@ -276,7 +261,6 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
             return;
         }
 
-        // Same idea as PlayerState: animation drives displacement; scale is used only when tuning speed.
         characterController.Move(dir * rootMotionSpeedScale);
         SyncNavMeshAgentPosition();
     }
@@ -352,9 +336,6 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
         return target != null;
     }
 
-    /// <summary>
-    /// 敌人受击入口。后续接血量系统时，可以在这里扣血并判断是否死亡。
-    /// </summary>
     public virtual void TakeHit()
     {
         TakeHit(null, -1f);
@@ -562,3 +543,5 @@ public abstract class EnemyBase : CharacterBase, IStateMachineOwner
         Gizmos.DrawWireSphere(center, radius);
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerTransfiguration : PlayerState
@@ -24,7 +24,7 @@ public class PlayerTransfiguration : PlayerState
         Player.playerTimeLineController.GetPlayerTimeLine("PlayerTransfigurationTimeline", FinishTransfiguration);
         Player.PlayAnimation("PlayerTransfiguration");
         EventCenter.Instance.EventTrigger(
-            GameEvent.外描边发光,
+            GameEvent.澶栨弿杈瑰彂鍏?
             new OutlineGlowEventData(true, new Color(0f, 0.3f, 1f, 1f))
         );
     }
@@ -111,3 +111,5 @@ public class PlayerTransfiguration : PlayerState
         Player.EndActionInvincible();
     }
 }
+
+

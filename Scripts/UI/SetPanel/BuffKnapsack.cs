@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BuffKnapsack : MonoBehaviour
 {
@@ -82,3 +82,5 @@ public class BuffKnapsack : MonoBehaviour
         buffCenter = center != null ? center.GetComponent<RectTransform>() : GetComponent<RectTransform>();
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,12 +17,12 @@ public class PlayerGhost : MonoBehaviour
         public float startRimAlpha;
     }
 
-    [Header("通用残影参数")]
+    [Header("閫氱敤娈嬪奖鍙傛暟")]
     [SerializeField] private bool enableGhost = true;
     [SerializeField] private bool includeMeshRendererGhost = true;
-    [SerializeField] private string[] ignoredMaterialNames = { "眉毛上 1" };
+    [SerializeField] private string[] ignoredMaterialNames = { "鐪夋瘺涓?1" };
 
-    [Header("菲涅尔残影")]
+    [Header("鑿叉秴灏旀畫褰?)]
     [SerializeField] private Color fresnelBaseColor = new Color(0.45f, 0.85f, 1f, 0.45f);
     [SerializeField] private float fresnelDuration = 0.45f;
     [SerializeField] private bool enableFresnelEmission = true;
@@ -32,21 +32,20 @@ public class PlayerGhost : MonoBehaviour
     [SerializeField, Range(0f, 10f)] private float fresnelIntensity = 3f;
     [SerializeField, Range(0f, 1f)] private float fresnelAlpha = 0.75f;
 
-    [Header("闪避残影")]
+    [Header("闂伩娈嬪奖")]
     [SerializeField] private float dodgeDuration = 0.35f;
     [SerializeField, Range(0f, 1f)] private float dodgeAlpha = 0.35f;
 
     private void OnEnable()
     {
-        // Branch attacks pass a color so the same Fresnel ghost can be reused by different combo data.
-        EventCenter.Instance.AddEventListener<Color>(GameEvent.生成残影, CreateFresnelGhost);
-        EventCenter.Instance.AddEventListener(GameEvent.生成闪避残影, CreateDodgeGhost);
+        EventCenter.Instance.AddEventListener<Color>(GameEvent.鐢熸垚娈嬪奖, CreateFresnelGhost);
+        EventCenter.Instance.AddEventListener(GameEvent.鐢熸垚闂伩娈嬪奖, CreateDodgeGhost);
     }
 
     private void OnDisable()
     {
-        EventCenter.Instance.RemoveEventListener(GameEvent.生成闪避残影, CreateDodgeGhost);
-        EventCenter.Instance.RemoveEventListener<Color>(GameEvent.生成残影, CreateFresnelGhost);
+        EventCenter.Instance.RemoveEventListener(GameEvent.鐢熸垚闂伩娈嬪奖, CreateDodgeGhost);
+        EventCenter.Instance.RemoveEventListener<Color>(GameEvent.鐢熸垚娈嬪奖, CreateFresnelGhost);
     }
 
     private void CreateFresnelGhost(Color ghostColor)
@@ -59,10 +58,6 @@ public class PlayerGhost : MonoBehaviour
         CreateGhost(GhostType.Dodge, fresnelBaseColor);
     }
 
-    /// <summary>
-    /// 记录当前所有可见 Renderer 的姿势，生成一份静态 Mesh 残影。
-    /// “生成残影”使用菲涅尔材质，“生成闪避残影”使用原材质透明副本。
-    /// </summary>
     private void CreateGhost(GhostType ghostType, Color ghostColor)
     {
         if (!enableGhost)
@@ -116,9 +111,6 @@ public class PlayerGhost : MonoBehaviour
         StartCoroutine(FadeAndDestroyGhost(ghostRoot, ghostMaterials, ghostMeshes, temporaryMaterials, duration));
     }
 
-    /// <summary>
-    /// 把骨骼动画当前姿势烘焙成普通 Mesh，残影销毁前不会再受动画影响。
-    /// </summary>
     private void CreateSkinnedMeshGhost(SkinnedMeshRenderer sourceRenderer, Transform ghostRoot, List<GhostMaterialInfo> ghostMaterials, List<Mesh> ghostMeshes, List<Material> temporaryMaterials, Material depthOnlyMaterial, GhostType ghostType, Color ghostColor)
     {
         Mesh bakedMesh = new Mesh();
@@ -129,9 +121,6 @@ public class PlayerGhost : MonoBehaviour
         CreateVisibleGhostPart(sourceRenderer.transform, bakedMesh, sourceRenderer.sharedMaterials, ghostRoot, ghostMaterials, temporaryMaterials, depthOnlyMaterial, ghostType, ghostColor);
     }
 
-    /// <summary>
-    /// 复制普通 MeshRenderer，主要用于武器、挂件等非骨骼模型。
-    /// </summary>
     private void CreateMeshGhost(MeshRenderer sourceRenderer, Transform ghostRoot, List<GhostMaterialInfo> ghostMaterials, List<Material> temporaryMaterials, Material depthOnlyMaterial, GhostType ghostType, Color ghostColor)
     {
         MeshFilter sourceFilter = sourceRenderer.GetComponent<MeshFilter>();
@@ -160,9 +149,6 @@ public class PlayerGhost : MonoBehaviour
         meshRenderer.sharedMaterials = CreateGhostMaterials(sourceMaterials, ghostMaterials, temporaryMaterials, hiddenMaterial, ghostType, ghostColor);
     }
 
-    /// <summary>
-    /// 先生成不可见深度副本，减少透明残影内部层叠穿透。
-    /// </summary>
     private void CreateDepthOnlyGhost(Transform sourceTransform, Mesh mesh, Transform ghostRoot, Material depthOnlyMaterial)
     {
         if (sourceTransform == null || mesh == null || depthOnlyMaterial == null)
@@ -244,7 +230,6 @@ public class PlayerGhost : MonoBehaviour
 
         Material material = new Material(shader);
         material.name = "Ghost_Fresnel_Material";
-        // Keep alpha controlled by ghost settings, but take hue from the branch combat data.
         Color baseColor = ghostColor;
         baseColor.a = fresnelAlpha;
         Color rimColor = ghostColor;
@@ -264,9 +249,7 @@ public class PlayerGhost : MonoBehaviour
 
     private GhostMaterialInfo CreateDodgeMaterial(Material sourceMaterial)
     {
-        // 闪避残影不能直接复制角色 Toon shader：原 shader 主 Pass 是不透明混合，
-        // 还包含 OutlineGlow Pass。这里改用透明 Unlit，再复制原贴图和颜色。
-        Material material = new Material(GetDefaultTransparentShader());
+        material = new Material(GetDefaultTransparentShader());
         material.name = "Ghost_Dodge_Material";
 
         CopyBaseTexture(sourceMaterial, material);
@@ -378,9 +361,6 @@ public class PlayerGhost : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 闪避残影只保留原色透明，不继承角色材质里的发光或边缘光。
-    /// </summary>
     private void DisableGlowMaterial(Material material)
     {
         if (material == null)
@@ -426,9 +406,6 @@ public class PlayerGhost : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 设置材质透明混合。不同管线属性名不完全一致，所以同时兼容 _BaseColor 和 _Color。
-    /// </summary>
     private void SetupTransparentMaterial(Material material, Color color)
     {
         if (material == null)
@@ -488,9 +465,6 @@ public class PlayerGhost : MonoBehaviour
         material.EnableKeyword("_EMISSION");
     }
 
-    /// <summary>
-    /// 设置专用残影 Shader 的 Fresnel 参数。截图里的白蓝边缘主要靠这里实现。
-    /// </summary>
     private void SetupFresnelMaterial(Material material, Color rimColor)
     {
         if (material.HasProperty("_RimColor"))
@@ -572,3 +546,5 @@ public class PlayerGhost : MonoBehaviour
         }
     }
 }
+
+

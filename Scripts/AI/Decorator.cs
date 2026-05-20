@@ -1,7 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//修饰节点
 public abstract class Decorator : Behavior
 {
     protected Behavior child;
@@ -10,3 +9,4 @@ public abstract class Decorator : Behavior
         this.child = child;
     }
 }
+

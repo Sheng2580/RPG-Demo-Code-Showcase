@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class textNpc : NPCBase
 {
@@ -19,10 +19,12 @@ public class textNpc : NPCBase
 
     public void InitActions()
     {
-        AddAction("升级", () =>
+        AddAction("鍗囩骇", () =>
         {
             UIManager.Instance.OpenPanel<UpGradePanel>();
-            EventCenter.Instance.EventTrigger(GameEvent.设置玩家输入状态,false);
+            EventCenter.Instance.EventTrigger(GameEvent.璁剧疆鐜╁杈撳叆鐘舵€?false);
         } );
     }
 }
+
+

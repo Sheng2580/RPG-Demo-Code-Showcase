@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class HarmTextItem : MonoBehaviour
@@ -111,3 +111,5 @@ public class HarmTextItem : MonoBehaviour
         }
     }
 }
+
+

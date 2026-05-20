@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//控制根运动
 public class CharacterModelBase : MonoBehaviour
 {
    public Animator animator;
@@ -14,10 +13,9 @@ public class CharacterModelBase : MonoBehaviour
          animator = GetComponent<Animator>();
       }
    }
-   
-   #region 动画根运动
+
+   #region 鍔ㄧ敾鏍硅繍鍔?
    private Action<Vector3,Quaternion> RootMotionAction;
-   // 赋值时加日志，确认委托被绑定
    public void SetRootMotionAction(Action<Vector3, Quaternion> rootMotionAction)
    {
       this.RootMotionAction = rootMotionAction;
@@ -37,5 +35,7 @@ public class CharacterModelBase : MonoBehaviour
    }
    #endregion
 
-   
+
 }
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,3 +21,5 @@ public static class SetPanelItemLoader
       return ABManager.Instance != null ? ABManager.Instance.LoadRes<GameObject>(abName, itemName) : null;
    }
 }
+
+

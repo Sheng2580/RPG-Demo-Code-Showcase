@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 public enum PlayerStatType
@@ -133,3 +133,5 @@ public class PlayerFinalStats
         return snapshots.TryGetValue(statType, out PlayerStatSnapshot snapshot) ? snapshot.FinalValue : 0f;
     }
 }
+
+

@@ -1,4 +1,4 @@
-public class PlayerSkill : PlayerState
+﻿public class PlayerSkill : PlayerState
 {
     public override void Enter()
     {
@@ -15,3 +15,5 @@ public class PlayerSkill : PlayerState
         Player.combatFormController?.CurrentForm?.OnSkillExit();
     }
 }
+
+

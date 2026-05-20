@@ -1,4 +1,4 @@
-public class PlayerIdle : PlayerState
+﻿public class PlayerIdle : PlayerState
 {
     public override void Enter()
     {
@@ -15,3 +15,5 @@ public class PlayerIdle : PlayerState
         Player.combatFormController?.CurrentForm?.OnIdleExit();
     }
 }
+
+

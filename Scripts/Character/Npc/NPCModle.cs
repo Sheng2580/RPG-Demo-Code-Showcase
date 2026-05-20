@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public class NPCModle : CharacterModelBase
     private Vector3 _lookAtTargetPos;
     private float _lookAtWeight;
     private Quaternion _originalHeadLocalRot;
-    
+
     public GameObject lookAtCamera;
     public float turnSpeed = 7f;
     public float autoDisableAngle = 8f;
@@ -40,7 +40,7 @@ public class NPCModle : CharacterModelBase
         {
             _lookAtWeight = Mathf.Lerp(_lookAtWeight, 0f, Time.deltaTime * turnSpeed * 2f);
         }
-        
+
         if (_lookAtWeight > 0.01f)
         {
             animator.SetLookAtPosition(_lookAtTargetPos);
@@ -51,12 +51,12 @@ public class NPCModle : CharacterModelBase
             animator.SetLookAtWeight(0);
         }
     }
-    
-    
+
+
     private bool CheckLookCondition()
     {
         if (Player == null || head == null || !isHeadRota) return false;
-        
+
         float distance = Vector3.Distance(Player.transform.position, transform.position);
         if (distance >= 5f) return false;
 
@@ -65,7 +65,6 @@ public class NPCModle : CharacterModelBase
         return Mathf.Abs(angle) < 60f;
     }
 
-    // 立即让头部面向默认朝向（使用记录的本地旋转）
     public void FaceForwardImmediate()
     {
         if (head == null) return;
@@ -73,7 +72,6 @@ public class NPCModle : CharacterModelBase
         head.transform.localRotation = _originalHeadLocalRot;
     }
 
-    // ��用/禁用头部跟随（禁用时立即清理 IK 权重）
     public void SetHeadRotationEnabled(bool enabled)
     {
         isHeadRota = enabled;
@@ -90,3 +88,5 @@ public class NPCModle : CharacterModelBase
         head.transform.localRotation = _originalHeadLocalRot;
     }
 }
+
+
